@@ -1,0 +1,46 @@
+<%- include('partials/header') %>
+<%- include('partials/navbar') %>
+<%- include('partials/alerts') %>
+
+<div class="container" style="padding: 5rem 1.5rem; max-width: 540px;">
+  <div style="background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 3rem 2.5rem; box-shadow: var(--shadow-md);">
+    <div style="text-align: center; margin-bottom: 2.5rem;">
+      <span class="section-tag">JOIN THE ARCHIVE</span>
+      <h1 style="font-size: 2.2rem; margin-bottom: 0.5rem;">Create an Account</h1>
+      <p style="color: var(--text-muted); font-size: 0.9rem;">Sign up for privileged access, personalized shade recommendations, and seamless checkout.</p>
+    </div>
+
+    <form action="/signup" method="POST">
+      <div class="form-group">
+        <label class="form-label" for="name">Full Name</label>
+        <input type="text" name="name" id="name" class="form-input" required placeholder="e.g. Charlotte Tilbury" value="<%= typeof formData !== 'undefined' && formData.name ? formData.name : '' %>">
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="email">Email Address</label>
+        <input type="email" name="email" id="email" class="form-input" required placeholder="name@example.com" value="<%= typeof formData !== 'undefined' && formData.email ? formData.email : '' %>">
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label" for="password">Password</label>
+          <input type="password" name="password" id="password" class="form-input" required placeholder="Min 6 characters">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="confirmPassword">Confirm Password</label>
+          <input type="password" name="confirmPassword" id="confirmPassword" class="form-input" required placeholder="Repeat password">
+        </div>
+      </div>
+
+      <button type="submit" class="btn btn-primary btn-block" style="margin-top: 1.5rem; padding: 0.95rem;">
+        CREATE ACCOUNT
+      </button>
+    </form>
+
+    <div style="margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid var(--border-light); text-align: center; font-size: 0.88rem; color: var(--text-muted);">
+      Already have a VELORA account? <a href="/login" style="color: var(--color-burgundy); font-weight: 700; text-decoration: underline;">Sign in</a>
+    </div>
+  </div>
+</div>
+
+<%- include('partials/footer') %>

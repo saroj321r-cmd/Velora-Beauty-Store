@@ -1,0 +1,293 @@
+/* ==========================================================================
+   VELORA ADMIN CONSOLE - STYLESHEET
+   Aesthetic: Clean, Modern, Operational, Executive
+   ========================================================================== */
+
+.admin-layout {
+  display: flex;
+  min-height: 100vh;
+  background: #F8F9FA;
+  font-family: var(--font-sans);
+  color: #212529;
+}
+
+/* Admin Sidebar */
+.admin-sidebar {
+  width: 260px;
+  background: #181514;
+  color: #E9ECEF;
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 100;
+}
+
+.admin-sidebar-header {
+  padding: 1.75rem 1.5rem;
+  border-bottom: 1px solid #2B2625;
+}
+
+.admin-sidebar-header h2 {
+  font-family: var(--font-serif);
+  font-size: 1.6rem;
+  letter-spacing: 0.15em;
+  color: #FFFFFF;
+}
+
+.admin-sidebar-header span {
+  font-size: 0.68rem;
+  color: #C47C85;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  display: block;
+}
+
+.admin-nav {
+  list-style: none;
+  padding: 1.5rem 0;
+  flex: 1;
+}
+
+.admin-nav li {
+  margin-bottom: 0.35rem;
+}
+
+.admin-nav a {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  padding: 0.75rem 1.5rem;
+  color: #ADB5BD;
+  font-size: 0.88rem;
+  font-weight: 500;
+  transition: all var(--transition-fast);
+}
+
+.admin-nav a:hover,
+.admin-nav li.active a {
+  color: #FFFFFF;
+  background: #2D2425;
+  border-left: 3px solid #C47C85;
+}
+
+.admin-sidebar-footer {
+  padding: 1.5rem;
+  border-top: 1px solid #2B2625;
+}
+
+.admin-sidebar-footer a {
+  color: #E63946;
+  font-size: 0.85rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Admin Main Content Wrapper */
+.admin-main {
+  margin-left: 260px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.admin-topbar {
+  background: #FFFFFF;
+  border-bottom: 1px solid #E9ECEF;
+  padding: 1rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.admin-topbar-title h1 {
+  font-size: 1.4rem;
+  font-family: var(--font-sans);
+  font-weight: 700;
+}
+
+.admin-topbar-user {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.admin-badge-avatar {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: #5B1E31;
+  color: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.85rem;
+}
+
+.admin-body {
+  padding: 2rem;
+  flex: 1;
+}
+
+/* KPI Metric Cards */
+.metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+  margin-bottom: 2.5rem;
+}
+
+.metric-card {
+  background: #FFFFFF;
+  border: 1px solid #E9ECEF;
+  border-radius: var(--radius-md);
+  padding: 1.5rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.metric-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: var(--radius-md);
+  background: #F9EAE8;
+  color: #5B1E31;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+}
+
+.metric-data h3 {
+  font-size: 1.6rem;
+  font-family: var(--font-sans);
+  font-weight: 700;
+  color: #1A1615;
+  margin-bottom: 0.2rem;
+}
+
+.metric-data p {
+  font-size: 0.8rem;
+  color: #6C757D;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Admin Tables */
+.admin-card {
+  background: #FFFFFF;
+  border: 1px solid #E9ECEF;
+  border-radius: var(--radius-md);
+  padding: 1.75rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+  margin-bottom: 2rem;
+}
+
+.admin-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.admin-table-wrapper {
+  overflow-x: auto;
+}
+
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.88rem;
+}
+
+.admin-table th {
+  background: #F8F9FA;
+  padding: 0.85rem 1rem;
+  text-align: left;
+  font-weight: 600;
+  color: #495057;
+  border-bottom: 2px solid #E9ECEF;
+}
+
+.admin-table td {
+  padding: 1rem;
+  border-bottom: 1px solid #E9ECEF;
+  vertical-align: middle;
+}
+
+.admin-table tr:hover td {
+  background: #FCFCFD;
+}
+
+.table-img {
+  width: 48px;
+  height: 48px;
+  border-radius: 6px;
+  object-fit: contain;
+  background: #F8F3ED;
+  border: 1px solid #E9ECEF;
+}
+
+/* Order Status Tags */
+.status-tag {
+  display: inline-block;
+  padding: 0.3rem 0.75rem;
+  border-radius: var(--radius-full);
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.status-pending { background: #FFF3CD; color: #856404; }
+.status-confirmed { background: #D1ECF1; color: #0C5460; }
+.status-packed { background: #E2E3E5; color: #383D41; }
+.status-shipped { background: #CCE5FF; color: #004085; }
+.status-delivered { background: #D4EDDA; color: #155724; }
+.status-cancelled { background: #F8D7DA; color: #721C24; }
+
+/* Admin Forms */
+.admin-form-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 2rem;
+}
+
+.admin-input-group {
+  margin-bottom: 1.25rem;
+}
+
+.admin-input-group label {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-bottom: 0.45rem;
+  color: #343A40;
+}
+
+.admin-input,
+.admin-select,
+.admin-textarea {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  background: #FFFFFF;
+  border: 1px solid #CED4DA;
+  border-radius: 6px;
+  font-size: 0.9rem;
+}
+
+.admin-input:focus,
+.admin-select:focus,
+.admin-textarea:focus {
+  border-color: #5B1E31;
+  outline: none;
+}

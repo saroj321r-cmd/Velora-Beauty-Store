@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= typeof title !== 'undefined' ? title : 'Customer Directory | VELORA Admin' %></title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/admin.css">
+</head>
+<body>
+
+<div class="admin-layout">
+  <!-- Sidebar -->
+  <aside class="admin-sidebar">
+    <div class="admin-sidebar-header">
+      <h2>VELORA</h2>
+      <span>Executive Suite</span>
+    </div>
+
+    <ul class="admin-nav">
+      <li><a href="/admin/dashboard">📊 Analytics Dashboard</a></li>
+      <li><a href="/admin/products">💄 Manage Products</a></li>
+      <li><a href="/admin/products/add">➕ Add New Formulation</a></li>
+      <li><a href="/admin/orders">📦 Customer Orders</a></li>
+      <li class="active"><a href="/admin/users">👥 Registered Clients</a></li>
+      <li><a href="/" target="_blank">🌐 Live Store Preview ↗</a></li>
+    </ul>
+
+    <div class="admin-sidebar-footer">
+      <a href="/logout">
+        <span>🚪 Sign Out</span>
+      </a>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="admin-main">
+    <header class="admin-topbar">
+      <div class="admin-topbar-title">
+        <h1>Client Directory & Accounts</h1>
+      </div>
+    </header>
+
+    <div class="admin-body">
+      <%- include('../partials/alerts') %>
+
+      <div class="admin-card">
+        <div class="admin-card-header">
+          <h3 style="font-size: 1.15rem;">Registered Customers (<%= users.length %>)</h3>
+        </div>
+
+        <div class="admin-table-wrapper">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>Customer Name</th>
+                <th>Email Address</th>
+                <th>Phone</th>
+                <th>Registered Date</th>
+                <th>Orders Placed</th>
+                <th>Shipping Location</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% if (users && users.length > 0) { %>
+                <% users.forEach(function(u) { %>
+                  <tr>
+                    <td>
+                      <div style="display: flex; align-items: center; gap: 0.75rem;">
+                        <div class="admin-badge-avatar" style="width: 32px; height: 32px; font-size: 0.75rem;">
+                          <%= u.name.charAt(0) %>
+                        </div>
+                        <strong><%= u.name %></strong>
+                      </div>
+                    </td>
+                    <td><%= u.email %></td>
+                    <td><%= u.phone || '—' %></td>
+                    <td><%= new Date(u.createdAt).toLocaleDateString() %></td>
+                    <td>
+                      <span class="badge" style="background: #EAF5EA; color: #2E7D32; font-size: 0.75rem;">
+                        <%= u.orderCount || 0 %> orders
+                      </span>
+                    </td>
+                    <td>
+                      <% if (u.address && u.address.city) { %>
+                        <%= u.address.city %>, <%= u.address.state %>
+                      <% } else { %>
+                        <span style="color: #6C757D;">No address saved</span>
+                      <% } %>
+                    </td>
+                  </tr>
+                <% }); %>
+              <% } else { %>
+                <tr>
+                  <td colspan="6" style="text-align: center; padding: 3rem; color: #6C757D;">No registered customers yet.</td>
+                </tr>
+              <% } %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+</body>
+</html>

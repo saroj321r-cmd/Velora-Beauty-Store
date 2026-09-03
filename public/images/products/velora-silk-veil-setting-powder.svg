@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FCFAF7" />
+      <stop offset="40%" stop-color="#F7EFE9" />
+      <stop offset="100%" stop-color="#EFE3DB" />
+    </linearGradient>
+    <radialGradient id="softGlow" cx="50%" cy="40%" r="55%">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.9" />
+      <stop offset="60%" stop-color="#FCEEEA" stop-opacity="0.5" />
+      <stop offset="100%" stop-color="#EFE2DA" stop-opacity="0" />
+    </radialGradient>
+    <filter id="softShadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="8" stdDeviation="10" flood-color="#3A1C22" flood-opacity="0.08" />
+    </filter>
+  </defs>
+
+  <!-- Background Canvas with luxury glow -->
+  <rect width="500" height="500" fill="url(#bgGrad)" />
+  <circle cx="250" cy="250" r="210" fill="url(#softGlow)" />
+
+  <!-- Subtle Studio Halo Pedestal -->
+  <ellipse cx="250" cy="445" rx="170" ry="26" fill="rgba(240, 225, 218, 0.7)" />
+
+  <!-- Main Cosmetic Illustration -->
+  <g filter="url(#softShadow)">
+    
+      <!-- Compact Shadow -->
+      <ellipse cx="250" cy="410" rx="140" ry="24" fill="rgba(60, 30, 35, 0.1)" filter="blur(10px)" />
+      
+      <defs>
+        <linearGradient id="compactGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#FAF5F0" />
+          <stop offset="50%" stop-color="#EEDFD5" />
+          <stop offset="100%" stop-color="#D8C3B4" />
+        </linearGradient>
+        <linearGradient id="roseGoldRing" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#F7DFDA" />
+          <stop offset="50%" stop-color="#C5857E" />
+          <stop offset="100%" stop-color="#9C5952" />
+        </linearGradient>
+        <radialGradient id="powderGrad" cx="45%" cy="40%" r="60%">
+          <stop offset="0%" stop-color="#FAF3EB" />
+          <stop offset="65%" stop-color="#EADBCC" />
+          <stop offset="100%" stop-color="#6E2836" />
+        </radialGradient>
+      </defs>
+
+      <!-- Mirror Lid propped up (Upper Lid) -->
+      <ellipse cx="250" cy="160" rx="120" ry="60" fill="url(#compactGrad)" stroke="url(#roseGoldRing)" stroke-width="4" />
+      <ellipse cx="250" cy="160" rx="102" ry="46" fill="#F0F4F8" opacity="0.8" stroke="rgba(255,255,255,0.7)" stroke-width="2" />
+      <path d="M 180 145 L 320 175" stroke="#FFFFFF" stroke-width="8" opacity="0.4" filter="blur(3px)" />
+
+      <!-- Lower Powder Base -->
+      <ellipse cx="250" cy="310" rx="135" ry="85" fill="url(#compactGrad)" stroke="url(#roseGoldRing)" stroke-width="5" />
+      <!-- Rose Gold Inner Rim -->
+      <ellipse cx="250" cy="310" rx="112" ry="68" fill="none" stroke="url(#roseGoldRing)" stroke-width="3" />
+      <!-- Powder Pan -->
+      <ellipse cx="250" cy="310" rx="100" ry="60" fill="url(#powderGrad)" />
+      
+      <!-- Embossed Brand Pattern in Powder -->
+      <path d="M 250 280 C 230 300, 230 320, 250 340 C 270 320, 270 300, 250 280 Z" fill="none" stroke="#FAF3EB" stroke-width="2" opacity="0.5" />
+      <text x="250" y="315" font-family="'Playfair Display', serif" font-size="14" letter-spacing="5" fill="#FFFFFF" text-anchor="middle" opacity="0.85">VELORA</text>
+    
+  </g>
+
+  <!-- Watermark / Category Pill Tag -->
+  <g transform="translate(24, 28)">
+    <rect x="0" y="0" width="84" height="22" rx="11" fill="#FFFFFF" opacity="0.85" />
+    <text x="42" y="14" font-family="'Plus Jakarta Sans', sans-serif" font-size="8.5" font-weight="600" letter-spacing="1.2" fill="#5B1E31" text-anchor="middle">MAKEUP</text>
+  </g>
+
+  <!-- Top Right Brand Stamp -->
+  <text x="475" y="42" font-family="'Playfair Display', serif" font-size="11" letter-spacing="3" fill="#A87F79" text-anchor="end" opacity="0.7">VELORA</text>
+</svg>

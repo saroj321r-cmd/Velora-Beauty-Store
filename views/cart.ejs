@@ -1,0 +1,167 @@
+<%- include('partials/header') %>
+<%- include('partials/navbar') %>
+<%- include('partials/alerts') %>
+
+<div class="container cart-page-section">
+  <div class="breadcrumb">
+    <a href="/">Home</a>
+    <span>/</span>
+    <span>Shopping Bag</span>
+  </div>
+
+  <div style="margin-bottom: 2.5rem;">
+    <h1 style="font-size: 2.4rem;">Your Shopping Bag</h1>
+    <p style="color: var(--text-muted);">
+      <% if (cart && cart.items && cart.items.length > 0) { %>
+        Review your formulations before complimentary gift packaging and dispatch.
+      <% } else { %>
+        Your bag is currently empty.
+      <% } %>
+    </p>
+  </div>
+
+  <% if (cart && cart.items && cart.items.length > 0) { %>
+    <!-- Free Shipping Progress Meter -->
+    <div class="free-shipping-progress">
+      <div style="display: flex; justify-content: space-between; font-size: 0.88rem; font-weight: 600;">
+        <% if (cart.freeShippingDiff > 0) { %>
+          <span>Add <strong>$<%= cart.freeShippingDiff.toFixed(2) %></strong> more for COMPLIMENTARY EXPRESS SHIPPING</span>
+        <% } else { %>
+          <span style="color: #2E7D32;">✓ Congratulations! You qualified for Complimentary Express Shipping</span>
+        <% } %>
+        <span>Goal: $50.00</span>
+      </div>
+      <div class="progress-bar-bg">
+        <div class="progress-fill" style="width: <%= Math.min(100, Math.round((cart.subtotal / 50) * 100)) %>%;"></div>
+      </div>
+    </div>
+
+    <div class="cart-grid">
+      <!-- Items Table -->
+      <div>
+        <table class="cart-table">
+          <thead>
+            <tr>
+              <th>Product</th>
+              <th>Price</th>
+              <th>Quantity</th>
+              <th style="text-align: right;">Subtotal</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% cart.items.forEach(function(item) { %>
+              <tr>
+                <!-- Product Column -->
+                <td>
+                  <div class="cart-item-info">
+                    <img src="<%= (item.product.images && item.product.images.length > 0) ? item.product.images[0] : '/images/products/placeholder.svg' %>" alt="<%= item.product.name %>" class="cart-item-img">
+                    <div>
+                      <h4 style="font-size: 1rem; margin-bottom: 0.2rem;">
+                        <a href="/product/<%= item.product.slug %>"><%= item.product.name %></a>
+                      </h4>
+                      <% if (item.selectedShade) { %>
+                        <div style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 0.4rem;">
+                          Shade: <strong><%= item.selectedShade %></strong>
+                        </div>
+                      <% } %>
+                      <form action="/cart/remove" method="POST" style="display: inline;">
+                        <input type="hidden" name="productId" value="<%= item.productId %>">
+                        <input type="hidden" name="shade" value="<%= item.selectedShade %>">
+                        <button type="submit" style="font-size: 0.78rem; color: #C62828; text-decoration: underline;">
+                          Remove
+                        </button>
+                      </form>
+                    </div>
+                  </div>
+                </td>
+
+                <!-- Price Column -->
+                <td style="font-weight: 600;">
+                  $<%= item.price.toFixed(2) %>
+                </td>
+
+                <!-- Quantity Column with Stepper Form -->
+                <td>
+                  <div style="display: flex; align-items: center; gap: 0.4rem;">
+                    <form action="/cart/update" method="POST" style="display: inline;">
+                      <input type="hidden" name="productId" value="<%= item.productId %>">
+                      <input type="hidden" name="shade" value="<%= item.selectedShade %>">
+                      <input type="hidden" name="action" value="decrease">
+                      <button type="submit" class="qty-btn" style="width: 32px; height: 32px; border: 1px solid var(--border-color); border-radius: 50%;">-</button>
+                    </form>
+
+                    <span style="min-width: 28px; text-align: center; font-weight: 700;"><%= item.quantity %></span>
+
+                    <form action="/cart/update" method="POST" style="display: inline;">
+                      <input type="hidden" name="productId" value="<%= item.productId %>">
+                      <input type="hidden" name="shade" value="<%= item.selectedShade %>">
+                      <input type="hidden" name="action" value="increase">
+                      <button type="submit" class="qty-btn" style="width: 32px; height: 32px; border: 1px solid var(--border-color); border-radius: 50%;" <%= item.quantity >= item.product.stock ? 'disabled style="opacity:0.4;"' : '' %>>+</button>
+                    </form>
+                  </div>
+                </td>
+
+                <!-- Subtotal Column -->
+                <td style="text-align: right; font-weight: 700; font-size: 1.05rem;">
+                  $<%= item.itemSubtotal.toFixed(2) %>
+                </td>
+              </tr>
+            <% }); %>
+          </tbody>
+        </table>
+
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 2rem;">
+          <a href="/products" class="btn btn-outline btn-sm">&larr; Continue Shopping</a>
+          <a href="/cart/clear" onclick="return confirm('Clear all items from your bag?');" style="font-size: 0.85rem; color: #C62828; text-decoration: underline;">
+            Clear Entire Bag
+          </a>
+        </div>
+      </div>
+
+      <!-- Order Summary Card -->
+      <div class="cart-order-summary">
+        <h3 style="font-size: 1.35rem; margin-bottom: 1.5rem;">Order Summary</h3>
+
+        <div class="summary-row">
+          <span style="color: var(--text-muted);">Bag Subtotal</span>
+          <span style="font-weight: 600;">$<%= cart.subtotal.toFixed(2) %></span>
+        </div>
+
+        <div class="summary-row">
+          <span style="color: var(--text-muted);">Estimated Shipping</span>
+          <span>
+            <% if (cart.shippingPrice === 0) { %>
+              <strong style="color: #2E7D32;">FREE</strong>
+            <% } else { %>
+              $<%= cart.shippingPrice.toFixed(2) %>
+            <% } %>
+          </span>
+        </div>
+
+        <div class="summary-row summary-total">
+          <span>Estimated Total</span>
+          <span style="color: var(--color-burgundy);">$<%= cart.totalPrice.toFixed(2) %></span>
+        </div>
+
+        <p style="font-size: 0.78rem; color: var(--text-light); margin: 1rem 0 1.5rem 0;">
+          Taxes calculated during checkout. Complimentary bespoke packaging included with every ritual.
+        </p>
+
+        <a href="/checkout" class="btn btn-primary btn-block" style="padding: 1rem;">
+          PROCEED TO CHECKOUT
+        </a>
+      </div>
+    </div>
+  <% } else { %>
+    <div style="text-align: center; padding: 6rem 1rem; background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: var(--radius-md);">
+      <div style="font-size: 3.5rem; margin-bottom: 1.25rem;">🛍️</div>
+      <h3 style="font-size: 1.8rem; margin-bottom: 0.5rem;">Your Shopping Bag is Empty</h3>
+      <p style="color: var(--text-muted); max-width: 420px; margin: 0 auto 2rem auto;">
+        Indulge in our curated beauty archives and treat yourself to clean, high-performance radiance.
+      </p>
+      <a href="/products" class="btn btn-primary">EXPLORE THE ARCHIVE</a>
+    </div>
+  <% } %>
+</div>
+
+<%- include('partials/footer') %>

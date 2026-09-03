@@ -1,0 +1,84 @@
+<%- include('partials/header') %>
+<%- include('partials/navbar') %>
+<%- include('partials/alerts') %>
+
+<div class="container" style="padding: 4rem 1.5rem;">
+  <div class="order-success-box">
+    <div class="success-icon">✓</div>
+    <span class="section-tag">RITUAL CONFIRMED</span>
+    <h1 style="font-size: 2.6rem; margin-bottom: 0.5rem;">Thank You For Your Order</h1>
+    <p style="color: var(--text-muted); font-size: 1rem; margin-bottom: 2rem;">
+      Your order <strong>#<%= order.orderNumber %></strong> has been received and is being prepared with bespoke care.
+    </p>
+
+    <!-- Order Progress Stepper -->
+    <div class="order-progress-stepper">
+      <div class="step-node completed">
+        <div class="step-circle">1</div>
+        <span class="step-title">Confirmed</span>
+      </div>
+      <div class="step-node <%= ['Packed', 'Shipped', 'Delivered'].includes(order.orderStatus) ? 'completed' : '' %>">
+        <div class="step-circle">2</div>
+        <span class="step-title">Packed</span>
+      </div>
+      <div class="step-node <%= ['Shipped', 'Delivered'].includes(order.orderStatus) ? 'completed' : '' %>">
+        <div class="step-circle">3</div>
+        <span class="step-title">Shipped</span>
+      </div>
+      <div class="step-node <%= order.orderStatus === 'Delivered' ? 'completed' : '' %>">
+        <div class="step-circle">4</div>
+        <span class="step-title">Delivered</span>
+      </div>
+    </div>
+
+    <!-- Order Summary Manifest -->
+    <div style="text-align: left; background: var(--bg-primary); border: 1px solid var(--border-color); border-radius: var(--radius-sm); padding: 1.75rem; margin-bottom: 2rem;">
+      <div style="display: flex; justify-content: space-between; border-bottom: 1px solid var(--border-color); padding-bottom: 1rem; margin-bottom: 1rem;">
+        <div>
+          <span style="font-size: 0.8rem; color: var(--text-muted); display: block;">DATE PLACED</span>
+          <strong><%= new Date(order.createdAt).toLocaleDateString() %></strong>
+        </div>
+        <div>
+          <span style="font-size: 0.8rem; color: var(--text-muted); display: block;">PAYMENT METHOD</span>
+          <strong><%= order.paymentMethod === 'COD' ? 'Cash on Delivery' : 'Demo Online Payment (Paid)' %></strong>
+        </div>
+        <div>
+          <span style="font-size: 0.8rem; color: var(--text-muted); display: block;">TOTAL AMOUNT</span>
+          <strong style="color: var(--color-burgundy); font-size: 1.1rem;">$<%= order.totalPrice.toFixed(2) %></strong>
+        </div>
+      </div>
+
+      <!-- Items List -->
+      <h4 style="font-size: 0.95rem; margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 0.05em;">Purchased Items</h4>
+      <div style="display: flex; flex-direction: column; gap: 0.75rem; margin-bottom: 1.5rem;">
+        <% order.items.forEach(function(item) { %>
+          <div style="display: flex; justify-content: space-between; align-items: center; font-size: 0.9rem;">
+            <div>
+              <strong><%= item.name %></strong>
+              <% if (item.selectedShade) { %>
+                <span style="color: var(--text-muted);"> • Shade: <%= item.selectedShade %></span>
+              <% } %>
+              <span style="color: var(--text-muted);"> (&times; <%= item.quantity %>)</span>
+            </div>
+            <strong>$<%= item.subtotal.toFixed(2) %></strong>
+          </div>
+        <% }); %>
+      </div>
+
+      <!-- Shipping Address -->
+      <div style="border-top: 1px solid var(--border-color); padding-top: 1rem; font-size: 0.88rem; color: var(--text-muted);">
+        <strong style="color: var(--text-main);">Shipping To:</strong>
+        <div><%= order.shippingAddress.fullName %></div>
+        <div><%= order.shippingAddress.address %>, <%= order.shippingAddress.city %>, <%= order.shippingAddress.state %> <%= order.shippingAddress.pincode %></div>
+        <div>Phone: <%= order.shippingAddress.phone %></div>
+      </div>
+    </div>
+
+    <div style="display: flex; gap: 1rem; justify-content: center;">
+      <a href="/orders" class="btn btn-secondary">VIEW ALL MY ORDERS</a>
+      <a href="/products" class="btn btn-primary">CONTINUE EXPLORING</a>
+    </div>
+  </div>
+</div>
+
+<%- include('partials/footer') %>

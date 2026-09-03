@@ -1,0 +1,175 @@
+<%- include('partials/header') %>
+<%- include('partials/navbar') %>
+<%- include('partials/alerts') %>
+
+<div class="container">
+  <!-- Breadcrumb & Header -->
+  <div style="padding-top: 2.5rem;">
+    <div class="breadcrumb">
+      <a href="/">Home</a>
+      <span>/</span>
+      <a href="/products">Shop</a>
+      <% if (currentCategory && currentCategory !== 'all') { %>
+        <span>/</span>
+        <span><%= currentCategory %></span>
+      <% } %>
+      <% if (currentSubcategory && currentSubcategory !== 'all') { %>
+        <span>/</span>
+        <span><%= currentSubcategory %></span>
+      <% } %>
+    </div>
+
+    <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem;">
+      <div>
+        <h1 style="font-size: 2.4rem; text-transform: uppercase;">
+          <%= (currentSubcategory && currentSubcategory !== 'all') ? currentSubcategory : (currentCategory && currentCategory !== 'all') ? currentCategory : 'Shop All Products' %>
+        </h1>
+        <p style="color: var(--text-muted); font-size: 0.95rem; margin-top: 0.25rem;">
+          Showing <%= products.length %> of <%= totalProducts %> formulations
+        </p>
+      </div>
+
+      <!-- Sorting Controls -->
+      <form action="/products" method="GET" id="sortForm" style="display: flex; align-items: center; gap: 0.75rem;">
+        <% if (currentCategory && currentCategory !== 'all') { %><input type="hidden" name="category" value="<%= currentCategory %>"><% } %>
+        <% if (currentSubcategory && currentSubcategory !== 'all') { %><input type="hidden" name="subcategory" value="<%= currentSubcategory %>"><% } %>
+        <% if (minPrice) { %><input type="hidden" name="minPrice" value="<%= minPrice %>"><% } %>
+        <% if (maxPrice) { %><input type="hidden" name="maxPrice" value="<%= maxPrice %>"><% } %>
+        <% if (selectedRating) { %><input type="hidden" name="rating" value="<%= selectedRating %>"><% } %>
+        
+        <label for="sortSelect" style="font-size: 0.85rem; font-weight: 600; text-transform: uppercase; color: var(--text-muted);">Sort By:</label>
+        <select name="sort" id="sortSelect" class="form-select" style="width: auto; padding: 0.5rem 1.75rem 0.5rem 1rem; border-radius: var(--radius-full); font-size: 0.85rem; background: var(--bg-surface);" onchange="this.form.submit()">
+          <option value="featured" <%= selectedSort === 'featured' ? 'selected' : '' %>>Featured</option>
+          <option value="newest" <%= selectedSort === 'newest' ? 'selected' : '' %>>Newest</option>
+          <option value="bestseller" <%= selectedSort === 'bestseller' ? 'selected' : '' %>>Best Selling</option>
+          <option value="price-asc" <%= selectedSort === 'price-asc' ? 'selected' : '' %>>Price: Low to High</option>
+          <option value="price-desc" <%= selectedSort === 'price-desc' ? 'selected' : '' %>>Price: High to Low</option>
+          <option value="rating" <%= selectedSort === 'rating' ? 'selected' : '' %>>Highest Rated</option>
+        </select>
+      </form>
+    </div>
+  </div>
+
+  <!-- Shop Main Layout (Sidebar Filters + Products Grid) -->
+  <div class="shop-layout">
+    <!-- Filter Sidebar -->
+    <aside class="filter-sidebar">
+      <form action="/products" method="GET">
+        <input type="hidden" name="sort" value="<%= selectedSort %>">
+
+        <!-- Categories Filter -->
+        <div class="filter-group">
+          <h4 class="filter-title">Category</h4>
+          <ul class="filter-list">
+            <li>
+              <a href="/products" class="<%= currentCategory === 'all' ? 'active' : '' %>">
+                <span>All Categories</span>
+              </a>
+            </li>
+            <li>
+              <a href="/products?category=Makeup" class="<%= currentCategory.toLowerCase() === 'makeup' ? 'active' : '' %>">
+                <span>Makeup</span>
+              </a>
+            </li>
+            <li>
+              <a href="/products?category=Skincare" class="<%= currentCategory.toLowerCase() === 'skincare' ? 'active' : '' %>">
+                <span>Skincare</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Subcategories Filter -->
+        <div class="filter-group">
+          <h4 class="filter-title">Type</h4>
+          <ul class="filter-list">
+            <li><a href="/products?subcategory=Lipsticks" class="<%= currentSubcategory === 'Lipsticks' ? 'active' : '' %>">Lipsticks</a></li>
+            <li><a href="/products?subcategory=Lip Gloss" class="<%= currentSubcategory === 'Lip Gloss' ? 'active' : '' %>">Lip Gloss</a></li>
+            <li><a href="/products?subcategory=Blush" class="<%= currentSubcategory === 'Blush' ? 'active' : '' %>">Blush & Cheek</a></li>
+            <li><a href="/products?subcategory=Foundation" class="<%= currentSubcategory === 'Foundation' ? 'active' : '' %>">Foundation</a></li>
+            <li><a href="/products?subcategory=Mascara" class="<%= currentSubcategory === 'Mascara' ? 'active' : '' %>">Mascara</a></li>
+            <li><a href="/products?subcategory=Serum" class="<%= currentSubcategory === 'Serum' ? 'active' : '' %>">Serums</a></li>
+            <li><a href="/products?subcategory=Moisturizer" class="<%= currentSubcategory === 'Moisturizer' ? 'active' : '' %>">Moisturizers</a></li>
+            <li><a href="/products?subcategory=Cleanser" class="<%= currentSubcategory === 'Cleanser' ? 'active' : '' %>">Cleansers</a></li>
+            <li><a href="/products?subcategory=Sunscreen" class="<%= currentSubcategory === 'Sunscreen' ? 'active' : '' %>">Sunscreen</a></li>
+          </ul>
+        </div>
+
+        <!-- Price Range Filter -->
+        <div class="filter-group">
+          <h4 class="filter-title">Price Range</h4>
+          <div style="display: flex; gap: 0.5rem; align-items: center; margin-bottom: 0.75rem;">
+            <input type="number" name="minPrice" placeholder="Min $" value="<%= minPrice %>" style="width: 100%; padding: 0.4rem 0.6rem; border: 1px solid var(--border-color); border-radius: var(--radius-sm); font-size: 0.85rem;">
+            <span style="color: var(--text-muted);">-</span>
+            <input type="number" name="maxPrice" placeholder="Max $" value="<%= maxPrice %>" style="width: 100%; padding: 0.4rem 0.6rem; border: 1px solid var(--border-color); border-radius: var(--radius-sm); font-size: 0.85rem;">
+          </div>
+          <% if (currentCategory && currentCategory !== 'all') { %><input type="hidden" name="category" value="<%= currentCategory %>"><% } %>
+          <% if (currentSubcategory && currentSubcategory !== 'all') { %><input type="hidden" name="subcategory" value="<%= currentSubcategory %>"><% } %>
+          <button type="submit" class="btn btn-secondary btn-sm btn-block">Filter Price</button>
+        </div>
+
+        <!-- Rating Filter -->
+        <div class="filter-group">
+          <h4 class="filter-title">Customer Rating</h4>
+          <ul class="filter-list">
+            <li>
+              <a href="/products?<%= currentCategory !== 'all' ? 'category=' + currentCategory + '&' : '' %>rating=4.8" class="<%= selectedRating === '4.8' ? 'active' : '' %>">
+                <span>★★★★☆ 4.8 & Above</span>
+              </a>
+            </li>
+            <li>
+              <a href="/products?<%= currentCategory !== 'all' ? 'category=' + currentCategory + '&' : '' %>rating=4.5" class="<%= selectedRating === '4.5' ? 'active' : '' %>">
+                <span>★★★★☆ 4.5 & Above</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Reset Button -->
+        <div style="margin-top: 1.5rem;">
+          <a href="/products" class="btn btn-outline btn-sm btn-block" style="text-align: center;">Reset All Filters</a>
+        </div>
+      </form>
+    </aside>
+
+    <!-- Products Grid Section -->
+    <main>
+      <% if (products.length > 0) { %>
+        <div class="product-grid">
+          <% products.forEach(function(product) { %>
+            <%- include('partials/product-card', { product: product }) %>
+          <% }); %>
+        </div>
+
+        <!-- Pagination -->
+        <% if (totalPages > 1) { %>
+          <div style="display: flex; justify-content: center; gap: 0.5rem; margin-top: 4rem;">
+            <% if (currentPage > 1) { %>
+              <a href="/products?page=<%= currentPage - 1 %>&category=<%= currentCategory %>&subcategory=<%= currentSubcategory %>&sort=<%= selectedSort %>&minPrice=<%= minPrice %>&maxPrice=<%= maxPrice %>" class="btn btn-outline btn-sm">&larr; Previous</a>
+            <% } %>
+
+            <% for (let p = 1; p <= totalPages; p++) { %>
+              <a href="/products?page=<%= p %>&category=<%= currentCategory %>&subcategory=<%= currentSubcategory %>&sort=<%= selectedSort %>&minPrice=<%= minPrice %>&maxPrice=<%= maxPrice %>" 
+                 class="btn btn-sm <%= p === currentPage ? 'btn-primary' : 'btn-outline' %>" style="min-width: 40px; padding: 0.5rem;">
+                <%= p %>
+              </a>
+            <% } %>
+
+            <% if (currentPage < totalPages) { %>
+              <a href="/products?page=<%= currentPage + 1 %>&category=<%= currentCategory %>&subcategory=<%= currentSubcategory %>&sort=<%= selectedSort %>&minPrice=<%= minPrice %>&maxPrice=<%= maxPrice %>" class="btn btn-outline btn-sm">Next &rarr;</a>
+            <% } %>
+          </div>
+        <% } %>
+      <% } else { %>
+        <div style="text-align: center; padding: 5rem 1rem; background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: var(--radius-md);">
+          <div style="font-size: 3rem; margin-bottom: 1rem;">✨</div>
+          <h3 style="font-size: 1.5rem; margin-bottom: 0.5rem;">No Formulations Found</h3>
+          <p style="color: var(--text-muted); margin-bottom: 1.5rem;">Try adjusting your filters or price range to explore more products.</p>
+          <a href="/products" class="btn btn-primary">CLEAR ALL FILTERS</a>
+        </div>
+      <% } %>
+    </main>
+  </div>
+</div>
+
+<%- include('partials/footer') %>

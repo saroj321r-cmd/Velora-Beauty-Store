@@ -1,0 +1,285 @@
+<%- include('partials/header') %>
+<%- include('partials/navbar') %>
+<%- include('partials/alerts') %>
+
+<!-- 1. Hero Editorial Section -->
+<section class="hero-section">
+  <div class="container">
+    <div class="hero-grid">
+      <div class="hero-content">
+        <span class="hero-tag">THE REFINED BEAUTY ESSENCE</span>
+        <h1 class="hero-title">YOUR BEAUTY.<br><span style="font-style: italic; font-family: var(--font-serif); color: var(--color-burgundy);">YOUR RULES.</span></h1>
+        <p class="hero-subtitle">
+          Discover modern makeup and clinical skincare formulated for every version of you. Weightless pigments, botanical infusions, and effortless radiance.
+        </p>
+        <div class="hero-buttons">
+          <a href="/category/makeup" class="btn btn-primary">SHOP MAKEUP</a>
+          <a href="/category/skincare" class="btn btn-secondary">SHOP SKINCARE</a>
+        </div>
+      </div>
+
+      <div class="hero-visual">
+        <div class="hero-img-box">
+          <img src="/images/products/velora-nude-muse-lipstick.svg" alt="Velora Nude Muse Signature Lipstick">
+        </div>
+        <div class="hero-badge-float">
+          <div class="icon">★</div>
+          <div>
+            <div style="font-size: 0.85rem; font-weight: 700;">Award-Winning Formula</div>
+            <div style="font-size: 0.72rem; color: var(--text-muted);">Voted Best Velvet Matte 2026</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 2. Brand Values Banner -->
+<section class="values-strip">
+  <div class="container">
+    <div class="values-grid">
+      <div class="value-item">
+        <div class="value-icon">🌿</div>
+        <div class="value-text">
+          <h4>100% Clean & Vegan</h4>
+          <p>Strictly free from parabens & sulfates</p>
+        </div>
+      </div>
+      <div class="value-item">
+        <div class="value-icon">🐰</div>
+        <div class="value-text">
+          <h4>Cruelty-Free Certified</h4>
+          <p>Never tested on animals</p>
+        </div>
+      </div>
+      <div class="value-item">
+        <div class="value-icon">✨</div>
+        <div class="value-text">
+          <h4>Dermatologist Formulated</h4>
+          <p>Backed by active clinical science</p>
+        </div>
+      </div>
+      <div class="value-item">
+        <div class="value-icon">📦</div>
+        <div class="value-text">
+          <h4>Complimentary Shipping</h4>
+          <p>On all domestic orders over $50</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 3. Shop by Category -->
+<section class="categories-section">
+  <div class="container">
+    <div class="section-header-center">
+      <span class="section-tag">CURATED RITUALS</span>
+      <h2 class="section-title">Shop by Category</h2>
+      <p class="section-desc">Explore tailored collections formulated to enhance your natural beauty with effortless elegance.</p>
+    </div>
+
+    <div class="category-cards-grid">
+      <a href="/category/makeup" class="category-card">
+        <div class="category-card-img">
+          <img src="/images/categories/makeup.svg" alt="Makeup">
+        </div>
+        <div class="category-card-body">
+          <h3>Makeup Collection</h3>
+          <span>Lipsticks, Foundations, Eyes & Blush</span>
+        </div>
+      </a>
+
+      <a href="/category/skincare" class="category-card">
+        <div class="category-card-img">
+          <img src="/images/categories/skincare.svg" alt="Skincare">
+        </div>
+        <div class="category-card-body">
+          <h3>Botanical Skincare</h3>
+          <span>Hydrating Serums, Toners & Cleansers</span>
+        </div>
+      </a>
+
+      <a href="/category/lips" class="category-card">
+        <div class="category-card-img">
+          <img src="/images/products/velora-petal-glaze-lip-gloss.svg" alt="Lip Bar">
+        </div>
+        <div class="category-card-body">
+          <h3>The Lip Bar</h3>
+          <span>Velvet Lipsticks, Oils & Glosses</span>
+        </div>
+      </a>
+
+      <a href="/category/face" class="category-card">
+        <div class="category-card-img">
+          <img src="/images/products/velora-rose-bloom-blush.svg" alt="Face & Cheeks">
+        </div>
+        <div class="category-card-body">
+          <h3>Complexion & Glow</h3>
+          <span>Cloud Foundations & Baked Blushes</span>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- 4. Best Sellers Section -->
+<section class="curated-section" style="background: var(--bg-surface); border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color);">
+  <div class="container">
+    <div class="section-header-center">
+      <span class="section-tag">MOST COVETED</span>
+      <h2 class="section-title">Best Sellers</h2>
+      <p class="section-desc">The iconic beauty icons our clients cannot stop repurchasing.</p>
+    </div>
+
+    <div class="product-grid">
+      <% if (typeof bestsellers !== 'undefined' && bestsellers.length > 0) { %>
+        <% bestsellers.slice(0, 4).forEach(function(product) { %>
+          <%- include('partials/product-card', { product: product }) %>
+        <% }); %>
+      <% } %>
+    </div>
+
+    <div style="text-align: center; margin-top: 3.5rem;">
+      <a href="/category/bestsellers" class="btn btn-outline">VIEW ALL BESTSELLERS</a>
+    </div>
+  </div>
+</section>
+
+<!-- 5. Editorial Promo Banner -->
+<section class="container" style="padding: 5rem 2rem;">
+  <div class="curated-banner">
+    <div class="curated-banner-text">
+      <span class="section-tag">EDITORIAL SPOTLIGHT</span>
+      <h2>The Glass Skin Protocol</h2>
+      <p style="color: var(--text-muted); max-width: 500px; margin-bottom: 1.75rem;">
+        Hydrate, repair, and illuminate with our multi-molecular hyaluronic acid elixir and ceramides for a truly transparent, glass-like reflection.
+      </p>
+      <a href="/product/velora-glass-skin-serum" class="btn btn-primary">DISCOVER THE SERUM</a>
+    </div>
+    <div style="max-width: 380px; width: 100%;">
+      <img src="/images/products/velora-glass-skin-serum.svg" alt="Velora Glass Skin Serum" style="filter: drop-shadow(0 15px 30px rgba(91,30,49,0.15));">
+    </div>
+  </div>
+</section>
+
+<!-- 6. New Arrivals Section -->
+<section class="curated-section">
+  <div class="container">
+    <div class="section-header-center">
+      <span class="section-tag">JUST LAUNCHED</span>
+      <h2 class="section-title">New Arrivals</h2>
+      <p class="section-desc">Freshly dropped shades, breakthrough formulas, and limited-edition beauty drops.</p>
+    </div>
+
+    <div class="product-grid">
+      <% if (typeof newArrivals !== 'undefined' && newArrivals.length > 0) { %>
+        <% newArrivals.slice(0, 4).forEach(function(product) { %>
+          <%- include('partials/product-card', { product: product }) %>
+        <% }); %>
+      <% } %>
+    </div>
+
+    <div style="text-align: center; margin-top: 3.5rem;">
+      <a href="/category/new-arrivals" class="btn btn-outline">EXPLORE NEW ARRIVALS</a>
+    </div>
+  </div>
+</section>
+
+<!-- 7. Lip Collection Spotlight -->
+<section class="curated-section" style="background: var(--bg-surface); border-top: 1px solid var(--border-color);">
+  <div class="container">
+    <div class="section-header-center">
+      <span class="section-tag">POUT PERFECTION</span>
+      <h2 class="section-title">The Lip Bar</h2>
+      <p class="section-desc">From weightless velvet mattes to high-shine non-sticky mirror glosses.</p>
+    </div>
+
+    <div class="product-grid">
+      <% if (typeof lipProducts !== 'undefined' && lipProducts.length > 0) { %>
+        <% lipProducts.slice(0, 4).forEach(function(product) { %>
+          <%- include('partials/product-card', { product: product }) %>
+        <% }); %>
+      <% } %>
+    </div>
+  </div>
+</section>
+
+<!-- 8. Skincare Rituals Spotlight -->
+<section class="curated-section">
+  <div class="container">
+    <div class="section-header-center">
+      <span class="section-tag">HEALTHY GLOW</span>
+      <h2 class="section-title">Skincare Essentials</h2>
+      <p class="section-desc">Clinically clean formulas formulated to reinforce your skin barrier and enhance youthful elasticity.</p>
+    </div>
+
+    <div class="product-grid">
+      <% if (typeof skincareProducts !== 'undefined' && skincareProducts.length > 0) { %>
+        <% skincareProducts.slice(0, 4).forEach(function(product) { %>
+          <%- include('partials/product-card', { product: product }) %>
+        <% }); %>
+      <% } %>
+    </div>
+  </div>
+</section>
+
+<!-- 9. Customer Reviews & Testimonials -->
+<section class="reviews-section">
+  <div class="container">
+    <div class="section-header-center">
+      <span class="section-tag">COMMUNITY LOVE</span>
+      <h2 class="section-title">Loved by Thousands</h2>
+      <p class="section-desc">Read genuine feedback from verified buyers who transformed their everyday beauty rituals.</p>
+    </div>
+
+    <div class="reviews-grid">
+      <% if (typeof customerReviews !== 'undefined' && customerReviews.length > 0) { %>
+        <% customerReviews.forEach(function(review) { %>
+          <div class="review-card">
+            <div class="review-stars">★★★★★</div>
+            <h4 class="review-title">"<%= review.title %>"</h4>
+            <p class="review-text">“<%= review.comment %>”</p>
+            <div class="review-author">
+              <div class="author-avatar"><%= review.userName.charAt(0) %></div>
+              <div class="author-info">
+                <h5><%= review.userName %></h5>
+                <span>✓ Verified Customer</span>
+              </div>
+            </div>
+          </div>
+        <% }); %>
+      <% } else { %>
+        <div class="review-card">
+          <div class="review-stars">★★★★★</div>
+          <h4 class="review-title">"Incredible velvet finish"</h4>
+          <p class="review-text">“Velora lipstick is easily the most comfortable formulation I have ever worn. Hydrating and never feathers!”</p>
+          <div class="review-author">
+            <div class="author-avatar">E</div>
+            <div class="author-info">
+              <h5>Elena Rostova</h5>
+              <span>✓ Verified Customer</span>
+            </div>
+          </div>
+        </div>
+      <% } %>
+    </div>
+  </div>
+</section>
+
+<!-- 10. Newsletter Signup Section -->
+<section class="newsletter-section">
+  <div class="container">
+    <div class="newsletter-box">
+      <span class="section-tag">BEAUTY PRIVILEGES</span>
+      <h2>Receive 15% Off Your First Ritual</h2>
+      <p>Subscribe to our exclusive beauty archive for private launch invites, formulation secrets, and complimentary deluxe samples.</p>
+      <form class="newsletter-form" onsubmit="event.preventDefault(); alert('Welcome to the VELORA Archive! Your 15% code is VELORA15'); this.reset();">
+        <input type="email" class="newsletter-input" required placeholder="Enter your email address">
+        <button type="submit" class="btn btn-primary">SUBSCRIBE</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<%- include('partials/footer') %>

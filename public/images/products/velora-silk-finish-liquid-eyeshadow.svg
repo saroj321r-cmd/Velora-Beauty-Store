@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FCFAF7" />
+      <stop offset="40%" stop-color="#F7EFE9" />
+      <stop offset="100%" stop-color="#EFE3DB" />
+    </linearGradient>
+    <radialGradient id="softGlow" cx="50%" cy="40%" r="55%">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.9" />
+      <stop offset="60%" stop-color="#FCEEEA" stop-opacity="0.5" />
+      <stop offset="100%" stop-color="#EFE2DA" stop-opacity="0" />
+    </radialGradient>
+    <filter id="softShadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="8" stdDeviation="10" flood-color="#3A1C22" flood-opacity="0.08" />
+    </filter>
+  </defs>
+
+  <!-- Background Canvas with luxury glow -->
+  <rect width="500" height="500" fill="url(#bgGrad)" />
+  <circle cx="250" cy="250" r="210" fill="url(#softGlow)" />
+
+  <!-- Subtle Studio Halo Pedestal -->
+  <ellipse cx="250" cy="445" rx="170" ry="26" fill="rgba(240, 225, 218, 0.7)" />
+
+  <!-- Main Cosmetic Illustration -->
+  <g filter="url(#softShadow)">
+    
+      <!-- Jar / Compact Luxury Item -->
+      <ellipse cx="250" cy="440" rx="110" ry="20" fill="rgba(60, 30, 35, 0.08)" filter="blur(8px)" />
+
+      <defs>
+        <linearGradient id="jarGlass" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#FAF4EE" />
+          <stop offset="50%" stop-color="#F0E3D6" />
+          <stop offset="100%" stop-color="#E2D0C1" />
+        </linearGradient>
+        <linearGradient id="lidRose" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#B87770" />
+          <stop offset="40%" stop-color="#F7D8D3" />
+          <stop offset="80%" stop-color="#A8615A" />
+        </linearGradient>
+      </defs>
+
+      <!-- Glass Cream Pot -->
+      <path d="M 175 270 C 175 270, 165 410, 200 425 C 225 435, 275 435, 300 425 C 335 410, 325 270, 325 270 Z" fill="url(#jarGlass)" stroke="#DFC9B8" stroke-width="2" />
+      
+      <!-- Cream content shine -->
+      <ellipse cx="250" cy="275" rx="72" ry="12" fill="#EBC3BB" opacity="0.4" />
+
+      <!-- Minimal Brand Label -->
+      <rect x="205" y="325" width="90" height="50" rx="3" fill="#FFFFFF" opacity="0.9" />
+      <text x="250" y="348" font-family="'Playfair Display', serif" font-size="10" letter-spacing="3" fill="#201A18" text-anchor="middle" font-weight="600">VELORA</text>
+      <text x="250" y="362" font-family="'Plus Jakarta Sans', sans-serif" font-size="6.5" letter-spacing="1.5" fill="#7C6B67" text-anchor="middle">HYDRA SOOTH</text>
+
+      <!-- Rose Gold Lid -->
+      <ellipse cx="250" cy="245" rx="82" ry="20" fill="url(#lidRose)" />
+      <rect x="168" y="225" width="164" height="20" fill="url(#lidRose)" />
+      <ellipse cx="250" cy="225" rx="82" ry="20" fill="#E6ABA3" stroke="#FCECE9" stroke-width="1.5" />
+    
+  </g>
+
+  <!-- Watermark / Category Pill Tag -->
+  <g transform="translate(24, 28)">
+    <rect x="0" y="0" width="84" height="22" rx="11" fill="#FFFFFF" opacity="0.85" />
+    <text x="42" y="14" font-family="'Plus Jakarta Sans', sans-serif" font-size="8.5" font-weight="600" letter-spacing="1.2" fill="#5B1E31" text-anchor="middle">MAKEUP</text>
+  </g>
+
+  <!-- Top Right Brand Stamp -->
+  <text x="475" y="42" font-family="'Playfair Display', serif" font-size="11" letter-spacing="3" fill="#A87F79" text-anchor="end" opacity="0.7">VELORA</text>
+</svg>

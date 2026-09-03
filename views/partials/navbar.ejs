@@ -1,0 +1,179 @@
+<!-- Announcement Bar -->
+<div class="announcement-bar">
+  <span>COMPLIMENTARY LUXE SHIPPING ON ALL ORDERS OVER $50</span>
+  <span style="opacity: 0.5;">•</span>
+  <span>CLEAN, VEGAN & CRUELTY-FREE BOTANICALS</span>
+</div>
+
+<!-- Main Site Header -->
+<header class="site-header">
+  <div class="container">
+    <div class="header-top">
+      <!-- Mobile Hamburger Button -->
+      <button type="button" class="mobile-nav-toggle" id="mobileNavToggle" aria-label="Toggle navigation">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="3" y1="12" x2="21" y2="12"></line>
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
+      </button>
+
+      <!-- Desktop Search Bar -->
+      <div class="header-search">
+        <form action="/search" method="GET" class="search-form">
+          <input type="text" name="search" class="search-input" placeholder="Search lipstick, serum, blush..." value="<%= typeof searchQuery !== 'undefined' ? searchQuery : '' %>">
+          <button type="submit" class="search-btn" aria-label="Search">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+          </button>
+        </form>
+      </div>
+
+      <!-- Brand Logo -->
+      <a href="/" class="brand-logo">
+        VELORA
+        <span>PARIS • NEW YORK</span>
+      </a>
+
+      <!-- Right Header Actions (Account, Wishlist, Cart) -->
+      <div class="header-actions">
+        <!-- Account Menu -->
+        <div class="user-auth-menu">
+          <% if (currentUser) { %>
+            <a href="/profile" class="user-btn">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                <circle cx="12" cy="7" r="4"></circle>
+              </svg>
+              <span style="font-size: 0.8rem;"><%= currentUser.name.split(' ')[0] %></span>
+            </a>
+            <div class="user-dropdown">
+              <a href="/profile">My Account</a>
+              <a href="/orders">My Orders</a>
+              <a href="/wishlist">Wishlist</a>
+              <% if (currentUser.role === 'admin') { %>
+                <a href="/admin/dashboard" style="color: #5B1E31; font-weight: 700;">Admin Console</a>
+              <% } %>
+              <div style="border-top: 1px solid var(--border-light); margin: 0.3rem 0;"></div>
+              <a href="/logout" style="color: #C62828;">Sign Out</a>
+            </div>
+          <% } else { %>
+            <a href="/login" class="user-btn" title="Sign In">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                <circle cx="12" cy="7" r="4"></circle>
+              </svg>
+              <span style="font-size: 0.8rem;">Sign In</span>
+            </a>
+          <% } %>
+        </div>
+
+        <!-- Wishlist Icon -->
+        <a href="/wishlist" class="action-icon-link" title="Wishlist">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+          </svg>
+          <span class="action-badge wishlist-badge-count" style="<%= (typeof wishlistCount !== 'undefined' && wishlistCount > 0) ? 'display: flex;' : 'display: none;' %>">
+            <%= typeof wishlistCount !== 'undefined' ? wishlistCount : 0 %>
+          </span>
+        </a>
+
+        <!-- Cart Bag Icon -->
+        <a href="/cart" class="action-icon-link" title="Shopping Bag">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <path d="M16 10a4 4 0 0 1-8 0"></path>
+          </svg>
+          <span class="action-badge cart-badge-count" style="<%= (typeof cartCount !== 'undefined' && cartCount > 0) ? 'display: flex;' : 'display: none;' %>">
+            <%= typeof cartCount !== 'undefined' ? cartCount : 0 %>
+          </span>
+        </a>
+      </div>
+    </div>
+
+    <!-- Desktop Navigation Links -->
+    <nav class="nav-bar">
+      <ul class="nav-links">
+        <li class="nav-item <%= (typeof currentPath !== 'undefined' && currentPath === '/') ? 'active' : '' %>">
+          <a href="/">Home</a>
+        </li>
+        <li class="nav-item <%= (typeof currentPath !== 'undefined' && currentPath === '/products' && (typeof currentCategory === 'undefined' || currentCategory === 'all')) ? 'active' : '' %>">
+          <a href="/products">Shop All</a>
+        </li>
+        <li class="nav-item <%= (typeof currentPath !== 'undefined' && currentPath.includes('makeup')) ? 'active' : '' %>">
+          <a href="/category/makeup">Makeup</a>
+        </li>
+        <li class="nav-item <%= (typeof currentPath !== 'undefined' && currentPath.includes('skincare')) ? 'active' : '' %>">
+          <a href="/category/skincare">Skincare</a>
+        </li>
+        <li class="nav-item">
+          <a href="/category/lips">Lips</a>
+        </li>
+        <li class="nav-item">
+          <a href="/category/eyes">Eyes</a>
+        </li>
+        <li class="nav-item">
+          <a href="/category/face">Face</a>
+        </li>
+        <li class="nav-item">
+          <a href="/category/new-arrivals">New Arrivals</a>
+        </li>
+        <li class="nav-item">
+          <a href="/category/bestsellers">Bestsellers</a>
+        </li>
+        <li class="nav-item nav-sale">
+          <a href="/products?sort=bestseller">Curated Sale</a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<!-- Mobile Navigation Drawer -->
+<div class="mobile-drawer-overlay" id="drawerOverlay"></div>
+<aside class="mobile-drawer" id="mobileDrawer">
+  <div class="mobile-drawer-header">
+    <div class="brand-logo" style="font-size: 1.4rem;">VELORA</div>
+    <button type="button" class="mobile-drawer-close" id="drawerClose" aria-label="Close menu">&times;</button>
+  </div>
+
+  <div style="padding: 1rem 1.5rem 0.5rem 1.5rem;">
+    <form action="/search" method="GET" class="search-form">
+      <input type="text" name="search" class="search-input" placeholder="Search beauty..." value="<%= typeof searchQuery !== 'undefined' ? searchQuery : '' %>">
+      <button type="submit" class="search-btn" aria-label="Search">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+      </button>
+    </form>
+  </div>
+
+  <ul class="mobile-nav-links">
+    <li><a href="/">Home</a></li>
+    <li><a href="/products">Shop All Products</a></li>
+    <li><a href="/category/makeup">Makeup</a></li>
+    <li><a href="/category/skincare">Skincare</a></li>
+    <li><a href="/category/lips">Lip Collection</a></li>
+    <li><a href="/category/eyes">Eye Makeup</a></li>
+    <li><a href="/category/face">Face Collection</a></li>
+    <li><a href="/category/new-arrivals">New Arrivals</a></li>
+    <li><a href="/category/bestsellers">Bestsellers</a></li>
+    <li><a href="/cart">My Shopping Bag</a></li>
+    <li><a href="/wishlist">My Wishlist</a></li>
+    <% if (currentUser) { %>
+      <li><a href="/profile">My Account</a></li>
+      <li><a href="/orders">My Orders</a></li>
+      <% if (currentUser.role === 'admin') { %>
+        <li><a href="/admin/dashboard" style="color: #5B1E31;">Admin Console</a></li>
+      <% } %>
+      <li><a href="/logout" style="color: #C62828;">Sign Out</a></li>
+    <% } else { %>
+      <li><a href="/login">Sign In</a></li>
+      <li><a href="/signup">Create Account</a></li>
+    <% } %>
+  </ul>
+</aside>

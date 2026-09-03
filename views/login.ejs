@@ -1,0 +1,47 @@
+<%- include('partials/header') %>
+<%- include('partials/navbar') %>
+<%- include('partials/alerts') %>
+
+<div class="container" style="padding: 5rem 1.5rem; max-width: 520px;">
+  <div style="background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 3rem 2.5rem; box-shadow: var(--shadow-md);">
+    <div style="text-align: center; margin-bottom: 2.5rem;">
+      <span class="section-tag">CLIENT PRIVILEGES</span>
+      <h1 style="font-size: 2.2rem; margin-bottom: 0.5rem;">Welcome Back</h1>
+      <p style="color: var(--text-muted); font-size: 0.9rem;">Sign in to access your saved wishlist, order history, and exclusive beauty perks.</p>
+    </div>
+
+    <form action="/login" method="POST">
+      <div class="form-group">
+        <label class="form-label" for="email">Email Address</label>
+        <input type="email" name="email" id="email" class="form-input" required placeholder="name@example.com" value="<%= typeof email !== 'undefined' ? email : '' %>">
+      </div>
+
+      <div class="form-group">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <label class="form-label" for="password">Password</label>
+          <a href="#" onclick="alert('Demo notice: For testing, use the default accounts or create a new account.'); return false;" style="font-size: 0.78rem; color: var(--color-burgundy); text-decoration: underline;">Forgot?</a>
+        </div>
+        <input type="password" name="password" id="password" class="form-input" required placeholder="Enter your password">
+      </div>
+
+      <button type="submit" class="btn btn-primary btn-block" style="margin-top: 1.5rem; padding: 0.95rem;">
+        SIGN IN
+      </button>
+    </form>
+
+    <div style="margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid var(--border-light); text-align: center; font-size: 0.88rem; color: var(--text-muted);">
+      New to VELORA? <a href="/signup" style="color: var(--color-burgundy); font-weight: 700; text-decoration: underline;">Create an account</a>
+    </div>
+
+    <!-- Quick Demo Accounts Assist Box -->
+    <div style="margin-top: 2rem; background: var(--bg-primary); border: 1px dashed var(--color-rose-deep); border-radius: var(--radius-sm); padding: 1rem; font-size: 0.8rem;">
+      <strong style="color: var(--color-burgundy);">Demo Test Credentials:</strong>
+      <div style="margin-top: 0.4rem; color: var(--text-muted);">
+        Customer: <code>customer@velora.com</code> / <code>Customer@123password</code><br>
+        Admin: <code>admin@velora.com</code> / <code>Admin@123password</code>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%- include('partials/footer') %>

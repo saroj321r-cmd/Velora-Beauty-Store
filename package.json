@@ -1,0 +1,37 @@
+{
+  "name": "velora-beauty-store",
+  "version": "1.0.0",
+  "description": "Production-style luxury makeup and beauty products e-commerce store with SSR and MongoDB",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js",
+    "seed": "node utils/seedProducts.js",
+    "test": "node test-verify.js"
+  },
+  "keywords": [
+    "beauty",
+    "cosmetics",
+    "ecommerce",
+    "express",
+    "mongodb",
+    "ejs",
+    "ssr"
+  ],
+  "author": "VELORA",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "connect-flash": "^0.1.1",
+    "dotenv": "^16.4.7",
+    "ejs": "^3.1.10",
+    "express": "^4.21.2",
+    "express-session": "^1.18.1",
+    "method-override": "^3.0.0",
+    "mongoose": "^8.9.5",
+    "multer": "^1.4.5-lts.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.9"
+  }
+}

@@ -1,0 +1,78 @@
+<%- include('partials/header') %>
+<%- include('partials/navbar') %>
+<%- include('partials/alerts') %>
+
+<div class="container" style="padding: 4rem 1.5rem;">
+  <div class="breadcrumb">
+    <a href="/">Home</a>
+    <span>/</span>
+    <span>Saved Wishlist</span>
+  </div>
+
+  <div style="margin-bottom: 2.5rem;">
+    <span class="section-tag">SAVED FORMULATIONS</span>
+    <h1 style="font-size: 2.4rem;">Your Curated Wishlist</h1>
+    <p style="color: var(--text-muted);">Formulations reserved for your future rituals.</p>
+  </div>
+
+  <% if (wishlist && wishlist.products && wishlist.products.length > 0) { %>
+    <div class="product-grid">
+      <% wishlist.products.forEach(function(product) { %>
+        <div class="product-card">
+          <div class="product-card-media">
+            <!-- Remove from Wishlist Form -->
+            <form action="/wishlist/toggle" method="POST" style="position: absolute; top: 0.85rem; right: 0.85rem; z-index: 3;">
+              <input type="hidden" name="productId" value="<%= product._id %>">
+              <button type="submit" class="wishlist-btn active" title="Remove from Wishlist">
+                ✕
+              </button>
+            </form>
+
+            <a href="/product/<%= product.slug %>">
+              <img src="<%= (product.images && product.images.length > 0) ? product.images[0] : '/images/products/placeholder.svg' %>" alt="<%= product.name %>">
+            </a>
+          </div>
+
+          <div class="product-card-body">
+            <div class="product-category-tag"><%= product.subcategory || product.category %></div>
+            <h3 class="product-title">
+              <a href="/product/<%= product.slug %>"><%= product.name %></a>
+            </h3>
+
+            <div class="product-card-footer" style="margin-bottom: 1.25rem;">
+              <span class="product-price">$<%= (product.discountPrice || product.price).toFixed(2) %></span>
+              <% if (product.discountPrice && product.discountPrice < product.price) { %>
+                <span class="original-price">$<%= product.price.toFixed(2) %></span>
+              <% } %>
+            </div>
+
+            <!-- Move to Cart Action -->
+            <% if (product.stock > 0) { %>
+              <form action="/wishlist/move-to-cart" method="POST">
+                <input type="hidden" name="productId" value="<%= product._id %>">
+                <button type="submit" class="btn btn-primary btn-sm btn-block">
+                  MOVE TO BAG
+                </button>
+              </form>
+            <% } else { %>
+              <button type="button" class="btn btn-outline btn-sm btn-block" disabled style="opacity: 0.5;">
+                OUT OF STOCK
+              </button>
+            <% } %>
+          </div>
+        </div>
+      <% }); %>
+    </div>
+  <% } else { %>
+    <div style="text-align: center; padding: 6rem 1rem; background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: var(--radius-md);">
+      <div style="font-size: 3rem; margin-bottom: 1rem;">♥</div>
+      <h3 style="font-size: 1.6rem; margin-bottom: 0.5rem;">Your Wishlist is Empty</h3>
+      <p style="color: var(--text-muted); max-width: 420px; margin: 0 auto 2rem auto;">
+        Keep track of favorite lipstick shades, hydrating serums, and bronzers by clicking the heart icon on any product.
+      </p>
+      <a href="/products" class="btn btn-primary">EXPLORE THE ARCHIVE</a>
+    </div>
+  <% } %>
+</div>
+
+<%- include('partials/footer') %>

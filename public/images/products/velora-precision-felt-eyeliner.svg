@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FCFAF7" />
+      <stop offset="40%" stop-color="#F7EFE9" />
+      <stop offset="100%" stop-color="#EFE3DB" />
+    </linearGradient>
+    <radialGradient id="softGlow" cx="50%" cy="40%" r="55%">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.9" />
+      <stop offset="60%" stop-color="#FCEEEA" stop-opacity="0.5" />
+      <stop offset="100%" stop-color="#EFE2DA" stop-opacity="0" />
+    </radialGradient>
+    <filter id="softShadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="8" stdDeviation="10" flood-color="#3A1C22" flood-opacity="0.08" />
+    </filter>
+  </defs>
+
+  <!-- Background Canvas with luxury glow -->
+  <rect width="500" height="500" fill="url(#bgGrad)" />
+  <circle cx="250" cy="250" r="210" fill="url(#softGlow)" />
+
+  <!-- Subtle Studio Halo Pedestal -->
+  <ellipse cx="250" cy="445" rx="170" ry="26" fill="rgba(240, 225, 218, 0.7)" />
+
+  <!-- Main Cosmetic Illustration -->
+  <g filter="url(#softShadow)">
+    
+      <!-- Mascara / Wand Shadow -->
+      <ellipse cx="250" cy="460" rx="70" ry="14" fill="rgba(60, 30, 35, 0.09)" filter="blur(8px)" />
+
+      <defs>
+        <linearGradient id="wandBody" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#1B1716" />
+          <stop offset="35%" stop-color="#3B3230" />
+          <stop offset="70%" stop-color="#231E1D" />
+          <stop offset="100%" stop-color="#100D0D" />
+        </linearGradient>
+        <linearGradient id="wandCap" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#C5857E" />
+          <stop offset="45%" stop-color="#FBE6E3" />
+          <stop offset="85%" stop-color="#AD6962" />
+        </linearGradient>
+      </defs>
+
+      <!-- Tube Body -->
+      <rect x="228" y="220" width="44" height="230" rx="10" fill="url(#wandBody)" />
+      <!-- Rose Gold Ring -->
+      <rect x="227" y="212" width="46" height="9" fill="url(#wandCap)" />
+
+      <!-- Vertical Label -->
+      <text x="250" y="340" font-family="'Playfair Display', serif" font-size="10" letter-spacing="4" fill="#FBE6E3" text-anchor="middle" transform="rotate(-90 250 340)">VELORA COUTURE</text>
+
+      <!-- Wand Cap Section -->
+      <rect x="230" y="70" width="40" height="142" rx="8" fill="url(#wandCap)" />
+      <line x1="250" y1="70" x2="250" y2="212" stroke="#FFFFFF" stroke-width="1.5" opacity="0.4" />
+    
+  </g>
+
+  <!-- Watermark / Category Pill Tag -->
+  <g transform="translate(24, 28)">
+    <rect x="0" y="0" width="84" height="22" rx="11" fill="#FFFFFF" opacity="0.85" />
+    <text x="42" y="14" font-family="'Plus Jakarta Sans', sans-serif" font-size="8.5" font-weight="600" letter-spacing="1.2" fill="#5B1E31" text-anchor="middle">MAKEUP</text>
+  </g>
+
+  <!-- Top Right Brand Stamp -->
+  <text x="475" y="42" font-family="'Playfair Display', serif" font-size="11" letter-spacing="3" fill="#A87F79" text-anchor="end" opacity="0.7">VELORA</text>
+</svg>

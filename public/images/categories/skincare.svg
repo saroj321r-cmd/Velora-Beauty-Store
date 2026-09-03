@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FCFAF7" />
+      <stop offset="40%" stop-color="#F7EFE9" />
+      <stop offset="100%" stop-color="#EFE3DB" />
+    </linearGradient>
+    <radialGradient id="softGlow" cx="50%" cy="40%" r="55%">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.9" />
+      <stop offset="60%" stop-color="#FCEEEA" stop-opacity="0.5" />
+      <stop offset="100%" stop-color="#EFE2DA" stop-opacity="0" />
+    </radialGradient>
+    <filter id="softShadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="8" stdDeviation="10" flood-color="#3A1C22" flood-opacity="0.08" />
+    </filter>
+  </defs>
+
+  <!-- Background Canvas with luxury glow -->
+  <rect width="500" height="500" fill="url(#bgGrad)" />
+  <circle cx="250" cy="250" r="210" fill="url(#softGlow)" />
+
+  <!-- Subtle Studio Halo Pedestal -->
+  <ellipse cx="250" cy="445" rx="170" ry="26" fill="rgba(240, 225, 218, 0.7)" />
+
+  <!-- Main Cosmetic Illustration -->
+  <g filter="url(#softShadow)">
+    
+      <!-- Dropper Bottle Shadow -->
+      <ellipse cx="250" cy="450" rx="85" ry="16" fill="rgba(60, 30, 35, 0.09)" filter="blur(8px)" />
+
+      <defs>
+        <linearGradient id="glassGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="rgba(255,255,255,0.7)" />
+          <stop offset="25%" stop-color="rgba(255,255,255,0.3)" />
+          <stop offset="70%" stop-color="rgba(255,255,255,0.1)" />
+          <stop offset="100%" stop-color="rgba(230,220,215,0.6)" />
+        </linearGradient>
+        <linearGradient id="serumLiquid" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#EBF3E8" stop-opacity="0.8" />
+          <stop offset="60%" stop-color="#CCD9C7" stop-opacity="0.75" />
+          <stop offset="100%" stop-color="#8C3B4E" stop-opacity="0.85" />
+        </linearGradient>
+        <linearGradient id="capGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#D8A49D" />
+          <stop offset="40%" stop-color="#FCECE9" />
+          <stop offset="80%" stop-color="#C7847C" />
+          <stop offset="100%" stop-color="#9C5B54" />
+        </linearGradient>
+      </defs>
+
+      <!-- Glass Bottle Body -->
+      <rect x="195" y="210" width="110" height="220" rx="20" fill="url(#glassGrad)" stroke="rgba(255,255,255,0.8)" stroke-width="2" />
+      <!-- Liquid Content Fill -->
+      <rect x="202" y="240" width="96" height="182" rx="14" fill="url(#serumLiquid)" />
+      
+      <!-- Internal Pipette Glass -->
+      <rect x="246" y="160" width="8" height="230" fill="rgba(255,255,255,0.5)" />
+      
+      <!-- Minimalist Luxury Label -->
+      <rect x="208" y="275" width="84" height="110" rx="3" fill="#FFFFFF" opacity="0.94" />
+      <text x="250" y="305" font-family="'Playfair Display', serif" font-size="10" letter-spacing="3" fill="#2D2826" text-anchor="middle" font-weight="600">VELORA</text>
+      <line x1="225" y1="315" x2="275" y2="315" stroke="#C47C85" stroke-width="1" />
+      <text x="250" y="332" font-family="'Plus Jakarta Sans', sans-serif" font-size="7" letter-spacing="1.5" fill="#666" text-anchor="middle">RADIANCE</text>
+      <text x="250" y="348" font-family="'Plus Jakarta Sans', sans-serif" font-size="6" letter-spacing="1" fill="#888" text-anchor="middle">30 ML / 1.0 FL OZ</text>
+      <circle cx="250" cy="365" r="3" fill="#CCD9C7" />
+
+      <!-- Bottle Neck -->
+      <rect x="232" y="185" width="36" height="25" fill="url(#capGrad)" />
+      <!-- Metallic Collar -->
+      <rect x="225" y="170" width="50" height="16" rx="2" fill="url(#capGrad)" />
+      <!-- Pipette Rubber Bulb -->
+      <path d="M 235 170 C 235 135, 265 135, 265 170 Z" fill="#FDFBF7" stroke="#E5DDD5" stroke-width="2" />
+    
+  </g>
+
+  <!-- Watermark / Category Pill Tag -->
+  <g transform="translate(24, 28)">
+    <rect x="0" y="0" width="84" height="22" rx="11" fill="#FFFFFF" opacity="0.85" />
+    <text x="42" y="14" font-family="'Plus Jakarta Sans', sans-serif" font-size="8.5" font-weight="600" letter-spacing="1.2" fill="#5B1E31" text-anchor="middle">SKINCARE</text>
+  </g>
+
+  <!-- Top Right Brand Stamp -->
+  <text x="475" y="42" font-family="'Playfair Display', serif" font-size="11" letter-spacing="3" fill="#A87F79" text-anchor="end" opacity="0.7">VELORA</text>
+</svg>

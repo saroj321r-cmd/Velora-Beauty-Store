@@ -1,0 +1,283 @@
+<%- include('partials/header') %>
+<%- include('partials/navbar') %>
+<%- include('partials/alerts') %>
+
+<div class="container product-details-container">
+  <!-- Breadcrumb -->
+  <div class="breadcrumb">
+    <a href="/">Home</a>
+    <span>/</span>
+    <a href="/products">Shop</a>
+    <span>/</span>
+    <a href="/category/<%= product.category.toLowerCase() %>"><%= product.category %></a>
+    <span>/</span>
+    <span><%= product.name %></span>
+  </div>
+
+  <!-- Main Product Detail Layout -->
+  <div class="product-detail-grid">
+    <!-- Media Gallery Column -->
+    <div class="product-gallery">
+      <div class="gallery-main-image">
+        <img id="mainGalleryImg" src="<%= (product.images && product.images.length > 0) ? product.images[0] : '/images/products/placeholder.svg' %>" alt="<%= product.name %>">
+      </div>
+      <% if (product.images && product.images.length > 1) { %>
+        <div class="gallery-thumbnails">
+          <% product.images.forEach(function(img, idx) { %>
+            <div class="thumb-item <%= idx === 0 ? 'active' : '' %>" data-src="<%= img %>">
+              <img src="<%= img %>" alt="Thumbnail <%= idx + 1 %>">
+            </div>
+          <% }); %>
+        </div>
+      <% } %>
+    </div>
+
+    <!-- Info & Purchase Column -->
+    <div class="detail-info">
+      <span class="detail-category"><%= product.brand %> • <%= product.subcategory || product.category %></span>
+      <h1 class="detail-title"><%= product.name %></h1>
+
+      <!-- Star Rating & Review Anchor -->
+      <div class="detail-rating">
+        <span class="stars">★★★★★</span>
+        <span style="font-weight: 700;"><%= (product.rating || 4.8).toFixed(1) %></span>
+        <a href="#reviews-section" style="color: var(--text-muted); text-decoration: underline; font-size: 0.85rem;">
+          Read <%= product.reviews || (reviews ? reviews.length : 0) %> Reviews
+        </a>
+      </div>
+
+      <!-- Price Box -->
+      <div class="detail-price-box">
+        <% if (product.discountPrice && product.discountPrice < product.price) { %>
+          <span class="detail-price">$<%= product.discountPrice.toFixed(2) %></span>
+          <span class="detail-original-price">$<%= product.price.toFixed(2) %></span>
+          <span class="discount-tag">SAVE <%= product.discountPercentage %>%</span>
+        <% } else { %>
+          <span class="detail-price">$<%= product.price.toFixed(2) %></span>
+        <% } %>
+      </div>
+
+      <!-- Description -->
+      <p class="detail-description">
+        <%= product.description %>
+      </p>
+
+      <!-- Purchase Form -->
+      <form action="/cart/add" method="POST" id="productPurchaseForm">
+        <input type="hidden" name="productId" value="<%= product._id %>">
+
+        <!-- Available Shades Selector -->
+        <% if (product.shades && product.shades.length > 0) { %>
+          <div class="shade-selector-section">
+            <div class="shade-label">
+              <span>Selected Shade: </span>
+              <strong id="activeShadeName" style="color: var(--color-burgundy);"><%= product.shades[0].name %></strong>
+            </div>
+            <input type="hidden" name="shade" id="selectedShadeInput" value="<%= product.shades[0].name %>">
+            <div class="shade-swatch-list">
+              <% product.shades.forEach(function(s, idx) { %>
+                <button type="button" class="swatch-btn <%= idx === 0 ? 'active' : '' %>" 
+                        data-shade-name="<%= s.name %>" 
+                        title="<%= s.name %>" 
+                        aria-label="<%= s.name %>">
+                  <span style="background-color: <%= s.hex %>;"></span>
+                </button>
+              <% }); %>
+            </div>
+          </div>
+        <% } %>
+
+        <!-- Stock Status -->
+        <div class="stock-status">
+          <% if (product.stock > 0) { %>
+            <span class="in-stock">● In Stock (<%= product.stock %> units available)</span>
+          <% } else { %>
+            <span class="out-of-stock">● Out of Stock</span>
+          <% } %>
+        </div>
+
+        <!-- Quantity & Add to Cart -->
+        <% if (product.stock > 0) { %>
+          <div class="quantity-actions-row">
+            <div class="qty-stepper">
+              <button type="button" class="qty-btn" id="qtyMinus" aria-label="Decrease quantity">-</button>
+              <input type="number" name="quantity" id="productQtyInput" class="qty-input" value="1" min="1" max="<%= product.stock %>" readonly>
+              <button type="button" class="qty-btn" id="qtyPlus" aria-label="Increase quantity">+</button>
+            </div>
+
+            <button type="submit" class="btn btn-primary" style="flex: 1;">
+              ADD TO BAG
+            </button>
+          </div>
+
+          <div style="display: flex; gap: 1rem; margin-top: 1rem;">
+            <!-- Instant Buy Now -->
+            <button type="submit" formaction="/cart/add" class="btn btn-secondary btn-block">
+              INSTANT CHECKOUT
+            </button>
+            
+            <!-- Add to Wishlist -->
+            <button type="button" class="btn btn-outline ajax-wishlist-toggle" data-product-id="<%= product._id %>" title="Save to Wishlist" style="width: auto; padding: 0 1.5rem;">
+              ♥ Wishlist
+            </button>
+          </div>
+        <% } else { %>
+          <button type="button" class="btn btn-outline btn-block" disabled style="opacity: 0.6; cursor: not-allowed; margin-bottom: 1rem;">
+            Sold Out — Notify When Restocked
+          </button>
+          <button type="button" class="btn btn-secondary btn-block ajax-wishlist-toggle" data-product-id="<%= product._id %>">
+            Save to Wishlist for Restock
+          </button>
+        <% } %>
+      </form>
+
+      <!-- Reassurance Badges -->
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 2.5rem; border-top: 1px solid var(--border-light); padding-top: 1.5rem;">
+        <div style="font-size: 0.8rem; color: var(--text-muted); display: flex; align-items: center; gap: 0.5rem;">
+          <span>✓</span> 30-Day Ritual Satisfaction Guarantee
+        </div>
+        <div style="font-size: 0.8rem; color: var(--text-muted); display: flex; align-items: center; gap: 0.5rem;">
+          <span>✓</span> Free Shipping on Orders Over $50
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Product Tabs (Details, Ingredients, How to Use, Reviews) -->
+  <section class="product-tabs-section">
+    <div class="tab-nav">
+      <button type="button" class="tab-btn active" data-tab="tab-description">The Formula</button>
+      <button type="button" class="tab-btn" data-tab="tab-ingredients">Key Ingredients</button>
+      <button type="button" class="tab-btn" data-tab="tab-howtouse">How To Use</button>
+      <button type="button" class="tab-btn" data-tab="tab-reviews" id="reviews-tab">Reviews (<%= reviews ? reviews.length : 0 %>)</button>
+    </div>
+
+    <div class="tab-content active" id="tab-description">
+      <p><%= product.description %></p>
+      <div style="margin-top: 1.5rem;">
+        <h4 style="font-size: 1.1rem; margin-bottom: 0.5rem;">The Velora Craft</h4>
+        <p>Hand-crafted in micro-batches to ensure peak botanical stability. Each pigment is micro-milled to achieve a featherweight sensation that honors the natural breathing rhythm of your skin.</p>
+      </div>
+    </div>
+
+    <div class="tab-content" id="tab-ingredients">
+      <h4 style="font-size: 1.1rem; margin-bottom: 0.5rem;">Full Ingredient Archive</h4>
+      <p style="font-family: monospace; font-size: 0.9rem; background: var(--bg-surface); padding: 1.5rem; border-radius: var(--radius-sm); border: 1px solid var(--border-color);">
+        <%= product.ingredients || 'Dimethicone, Synthetic Wax, Camellia Seed Oil, Rosa Canina Fruit Extract, Tocopherol (Vitamin E), Hyaluronic Acid.' %>
+      </p>
+      <p style="margin-top: 1rem; font-size: 0.85rem;">Clean formulation. 100% free from parabens, phthalates, mineral oil, synthetic fragrance, and gluten.</p>
+    </div>
+
+    <div class="tab-content" id="tab-howtouse">
+      <h4 style="font-size: 1.1rem; margin-bottom: 0.5rem;">Application Ritual</h4>
+      <p><%= product.howToUse || 'Apply gently to clean skin or lips. Layer as desired for richer intensity and a radiant finish.' %></p>
+      <div style="margin-top: 1.5rem; background: var(--bg-surface); padding: 1.5rem; border-radius: var(--radius-sm); border-left: 3px solid var(--color-burgundy);">
+        <strong>Pro Artist Tip:</strong> Warm between fingertips before application for skin-melting seamless glide.
+      </div>
+    </div>
+
+    <!-- Reviews Tab & Submission Form -->
+    <div class="tab-content" id="tab-reviews">
+      <div id="reviews-section" style="margin-bottom: 3rem;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+          <h3 style="font-size: 1.6rem;">Client Testimonials</h3>
+          <div style="font-size: 1.1rem; font-weight: 700;">
+            <span class="stars">★★★★★</span> <%= (product.rating || 4.8).toFixed(1) %> / 5.0
+          </div>
+        </div>
+
+        <% if (reviews && reviews.length > 0) { %>
+          <div style="display: flex; flex-direction: column; gap: 1.5rem; margin-bottom: 3rem;">
+            <% reviews.forEach(function(rev) { %>
+              <div style="background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 1.5rem;">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                  <div>
+                    <span class="stars" style="color: #D4AF37;">★</span>
+                    <strong><%= rev.rating %>.0</strong>
+                    <span style="font-weight: 600; margin-left: 0.5rem;"><%= rev.title %></span>
+                  </div>
+                  <span style="font-size: 0.78rem; color: var(--text-light);"><%= new Date(rev.createdAt).toLocaleDateString() %></span>
+                </div>
+                <p style="font-size: 0.92rem; color: var(--text-muted); margin-bottom: 0.75rem;"><%= rev.comment %></p>
+                <div style="font-size: 0.78rem; color: var(--text-light);">
+                  By <strong style="color: var(--text-main);"><%= rev.userName %></strong>
+                  <% if (rev.shade) { %> • Shade: <em><%= rev.shade %></em><% } %>
+                  • <span style="color: #2E7D32;">✓ Verified Buyer</span>
+                </div>
+              </div>
+            <% }); %>
+          </div>
+        <% } else { %>
+          <p style="margin-bottom: 2rem; color: var(--text-muted);">No reviews written yet. Be the first to share your experience!</p>
+        <% } %>
+
+        <!-- Leave a Review Box -->
+        <div style="background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 2rem;">
+          <h4 style="font-size: 1.25rem; margin-bottom: 1rem;">Write a Review</h4>
+          <% if (currentUser) { %>
+            <form action="/product/review" method="POST">
+              <input type="hidden" name="productId" value="<%= product._id %>">
+              
+              <div class="form-row">
+                <div class="form-group">
+                  <label class="form-label">Your Rating</label>
+                  <select name="rating" class="form-select" required>
+                    <option value="5">★★★★★ 5 Stars (Extraordinary)</option>
+                    <option value="4">★★★★☆ 4 Stars (Very Good)</option>
+                    <option value="3">★★★☆☆ 3 Stars (Average)</option>
+                    <option value="2">★★☆☆☆ 2 Stars (Below Average)</option>
+                    <option value="1">★☆☆☆☆ 1 Star (Disappointed)</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Review Headline</label>
+                  <input type="text" name="title" class="form-input" required placeholder="e.g. My new holy grail lipstick">
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Your Experience</label>
+                <textarea name="comment" rows="4" class="form-textarea" required placeholder="Describe texture, wear-time, scent, finish, etc."></textarea>
+              </div>
+
+              <% if (product.shades && product.shades.length > 0) { %>
+                <div class="form-group">
+                  <label class="form-label">Shade Reviewed (Optional)</label>
+                  <select name="shade" class="form-select">
+                    <% product.shades.forEach(function(s) { %>
+                      <option value="<%= s.name %>"><%= s.name %></option>
+                    <% }); %>
+                  </select>
+                </div>
+              <% } %>
+
+              <button type="submit" class="btn btn-primary">SUBMIT REVIEW</button>
+            </form>
+          <% } else { %>
+            <p style="color: var(--text-muted); margin-bottom: 1rem;">Please sign in to your VELORA account to submit a verified review.</p>
+            <a href="/login" class="btn btn-secondary btn-sm">Sign In to Review</a>
+          <% } %>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Related Formulations Section -->
+  <% if (relatedProducts && relatedProducts.length > 0) { %>
+    <section style="margin-top: 5rem; border-top: 1px solid var(--border-color); padding-top: 4rem;">
+      <div class="section-header-center">
+        <span class="section-tag">COMPLETE THE LOOK</span>
+        <h2 class="section-title">You May Also Admire</h2>
+        <p class="section-desc">Harmonious pairing formulations tailored for this ritual.</p>
+      </div>
+
+      <div class="product-grid">
+        <% relatedProducts.forEach(function(rel) { %>
+          <%- include('partials/product-card', { product: rel }) %>
+        <% }); %>
+      </div>
+    </section>
+  <% } %>
+</div>
+
+<%- include('partials/footer') %>

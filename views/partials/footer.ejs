@@ -1,0 +1,68 @@
+<!-- Site Footer -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <!-- Brand Column -->
+      <div class="footer-brand">
+        <h3>VELORA</h3>
+        <p>Formulated at the intersection of haute couture aesthetics and pure botanical efficacy. Clean, high-performance beauty crafted for every shade of you.</p>
+        <div style="margin-top: 1.5rem; display: flex; gap: 1rem; color: #E8C5C8;">
+          <span style="font-size: 0.8rem; letter-spacing: 0.1em;">NEW YORK • PARIS • TOKYO</span>
+        </div>
+      </div>
+
+      <!-- Shop Column -->
+      <div class="footer-col">
+        <h4>Collection</h4>
+        <ul>
+          <li><a href="/products">Shop All</a></li>
+          <li><a href="/category/makeup">Face & Makeup</a></li>
+          <li><a href="/category/skincare">Botanical Skincare</a></li>
+          <li><a href="/category/lips">Lip Bar</a></li>
+          <li><a href="/category/new-arrivals">New Arrivals</a></li>
+          <li><a href="/category/bestsellers">Bestsellers</a></li>
+        </ul>
+      </div>
+
+      <!-- Customer Care -->
+      <div class="footer-col">
+        <h4>Client Care</h4>
+        <ul>
+          <li><a href="/orders">Track My Order</a></li>
+          <li><a href="/cart">Shopping Bag</a></li>
+          <li><a href="/wishlist">Saved Favorites</a></li>
+          <li><a href="/profile">My Account</a></li>
+          <li><a href="/admin/login">Admin Console</a></li>
+        </ul>
+      </div>
+
+      <!-- Newsletter Column -->
+      <div class="footer-col">
+        <h4>The Velora Archive</h4>
+        <p style="font-size: 0.85rem; color: #A39B96; margin-bottom: 1.25rem;">
+          Subscribe for privileged access to limited cosmetic drops, editorial rituals, and private sales.
+        </p>
+        <form onsubmit="event.preventDefault(); alert('Thank you for subscribing to VELORA!'); this.reset();" style="display: flex; gap: 0.5rem;">
+          <input type="email" required placeholder="Enter your email" style="flex: 1; background: #231E1D; border: 1px solid #3B3432; color: #FFF; padding: 0.65rem 1rem; border-radius: var(--radius-full); font-size: 0.82rem;">
+          <button type="submit" class="btn btn-primary btn-sm" style="padding: 0.65rem 1.2rem;">Join</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Bottom Bar -->
+    <div class="footer-bottom">
+      <p>&copy; <%= new Date().getFullYear() %> VELORA BEAUTY INC. ALL RIGHTS RESERVED.</p>
+      <div style="display: flex; gap: 1.5rem;">
+        <span style="color: #A39B96;">Privacy Policy</span>
+        <span style="color: #A39B96;">Terms of Service</span>
+        <span style="color: #A39B96;">Cruelty-Free Certified</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- Scripts -->
+<script src="/js/main.js"></script>
+<script src="/js/cart.js"></script>
+</body>
+</html>

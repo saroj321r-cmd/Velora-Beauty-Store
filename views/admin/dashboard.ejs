@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= typeof title !== 'undefined' ? title : 'Console Dashboard | VELORA Admin' %></title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/admin.css">
+</head>
+<body>
+
+<div class="admin-layout">
+  <!-- Sidebar -->
+  <aside class="admin-sidebar">
+    <div class="admin-sidebar-header">
+      <h2>VELORA</h2>
+      <span>Executive Suite</span>
+    </div>
+
+    <ul class="admin-nav">
+      <li class="active"><a href="/admin/dashboard">📊 Analytics Dashboard</a></li>
+      <li><a href="/admin/products">💄 Manage Products</a></li>
+      <li><a href="/admin/products/add">➕ Add New Formulation</a></li>
+      <li><a href="/admin/orders">📦 Customer Orders</a></li>
+      <li><a href="/admin/users">👥 Registered Clients</a></li>
+      <li><a href="/" target="_blank">🌐 Live Store Preview ↗</a></li>
+    </ul>
+
+    <div class="admin-sidebar-footer">
+      <a href="/logout">
+        <span>🚪 Sign Out</span>
+      </a>
+    </div>
+  </aside>
+
+  <!-- Main Administrative Content -->
+  <main class="admin-main">
+    <!-- Top Bar -->
+    <header class="admin-topbar">
+      <div class="admin-topbar-title">
+        <h1>Console Overview</h1>
+      </div>
+      <div class="admin-topbar-user">
+        <div class="admin-badge-avatar">A</div>
+        <div>
+          <strong style="font-size: 0.9rem;"><%= currentUser.name %></strong>
+          <span style="display: block; font-size: 0.75rem; color: #6C757D;">Administrator</span>
+        </div>
+      </div>
+    </header>
+
+    <div class="admin-body">
+      <%- include('../partials/alerts') %>
+
+      <!-- Metric Cards Grid -->
+      <div class="metrics-grid">
+        <div class="metric-card">
+          <div class="metric-icon">💰</div>
+          <div class="metric-data">
+            <h3>$<%= stats.totalRevenue.toFixed(2) %></h3>
+            <p>Total Revenue</p>
+          </div>
+        </div>
+
+        <div class="metric-card">
+          <div class="metric-icon">📦</div>
+          <div class="metric-data">
+            <h3><%= stats.totalOrders %></h3>
+            <p>Total Orders</p>
+          </div>
+        </div>
+
+        <div class="metric-card">
+          <div class="metric-icon">⏳</div>
+          <div class="metric-data">
+            <h3><%= stats.pendingOrders %></h3>
+            <p>Pending Orders</p>
+          </div>
+        </div>
+
+        <div class="metric-card">
+          <div class="metric-icon">💄</div>
+          <div class="metric-data">
+            <h3><%= stats.totalProducts %></h3>
+            <p>Catalog Products</p>
+          </div>
+        </div>
+      </div>
+
+      <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 2rem; align-items: start;">
+        <!-- Recent Orders Table -->
+        <div class="admin-card">
+          <div class="admin-card-header">
+            <h3 style="font-size: 1.2rem;">Recent Orders</h3>
+            <a href="/admin/orders" style="font-size: 0.85rem; color: #5B1E31; text-decoration: underline; font-weight: 600;">View All Orders &rarr;</a>
+          </div>
+
+          <div class="admin-table-wrapper">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>Order #</th>
+                  <th>Customer</th>
+                  <th>Total</th>
+                  <th>Status</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% if (recentOrders && recentOrders.length > 0) { %>
+                  <% recentOrders.forEach(function(ord) { %>
+                    <tr>
+                      <td><strong>#<%= ord.orderNumber %></strong></td>
+                      <td><%= ord.shippingAddress.fullName %></td>
+                      <td><strong>$<%= ord.totalPrice.toFixed(2) %></strong></td>
+                      <td>
+                        <span class="status-tag status-<%= ord.orderStatus.toLowerCase() %>">
+                          <%= ord.orderStatus %>
+                        </span>
+                      </td>
+                      <td>
+                        <a href="/admin/orders" style="color: #5B1E31; font-weight: 600; text-decoration: underline;">Manage</a>
+                      </td>
+                    </tr>
+                  <% }); %>
+                <% } else { %>
+                  <tr>
+                    <td colspan="5" style="text-align: center; color: #6C757D; padding: 2rem;">No orders placed yet.</td>
+                  </tr>
+                <% } %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Low Stock Alerts -->
+        <div class="admin-card">
+          <div class="admin-card-header">
+            <h3 style="font-size: 1.2rem; color: #C62828;">Low Stock Alerts</h3>
+            <a href="/admin/products" style="font-size: 0.85rem; color: #5B1E31; text-decoration: underline;">Inventory &rarr;</a>
+          </div>
+
+          <% if (lowStockProducts && lowStockProducts.length > 0) { %>
+            <div style="display: flex; flex-direction: column; gap: 1rem;">
+              <% lowStockProducts.forEach(function(prod) { %>
+                <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.75rem; background: #FFF3CD; border-radius: 6px;">
+                  <div>
+                    <strong style="font-size: 0.88rem;"><%= prod.name %></strong>
+                    <div style="font-size: 0.75rem; color: #856404;"><%= prod.category %> • <%= prod.subcategory %></div>
+                  </div>
+                  <span style="font-size: 0.82rem; font-weight: 700; color: #C62828;"><%= prod.stock %> left</span>
+                </div>
+              <% }); %>
+            </div>
+          <% } else { %>
+            <p style="color: #2E7D32; font-size: 0.88rem;">All catalog inventories healthy (> 10 units).</p>
+          <% } %>
+
+          <div style="margin-top: 2rem; border-top: 1px solid #E9ECEF; padding-top: 1.25rem;">
+            <a href="/admin/products/add" class="btn btn-primary btn-block" style="background: #5B1E31; padding: 0.75rem;">
+              + ADD NEW PRODUCT
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+</body>
+</html>

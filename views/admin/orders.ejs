@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= typeof title !== 'undefined' ? title : 'Order Fulfillment | VELORA Admin' %></title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/admin.css">
+</head>
+<body>
+
+<div class="admin-layout">
+  <!-- Sidebar -->
+  <aside class="admin-sidebar">
+    <div class="admin-sidebar-header">
+      <h2>VELORA</h2>
+      <span>Executive Suite</span>
+    </div>
+
+    <ul class="admin-nav">
+      <li><a href="/admin/dashboard">📊 Analytics Dashboard</a></li>
+      <li><a href="/admin/products">💄 Manage Products</a></li>
+      <li><a href="/admin/products/add">➕ Add New Formulation</a></li>
+      <li class="active"><a href="/admin/orders">📦 Customer Orders</a></li>
+      <li><a href="/admin/users">👥 Registered Clients</a></li>
+      <li><a href="/" target="_blank">🌐 Live Store Preview ↗</a></li>
+    </ul>
+
+    <div class="admin-sidebar-footer">
+      <a href="/logout">
+        <span>🚪 Sign Out</span>
+      </a>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="admin-main">
+    <header class="admin-topbar">
+      <div class="admin-topbar-title">
+        <h1>Order Processing & Fulfillment</h1>
+      </div>
+    </header>
+
+    <div class="admin-body">
+      <%- include('../partials/alerts') %>
+
+      <div class="admin-card">
+        <!-- Status Filter Filter Tabs -->
+        <div style="display: flex; gap: 0.5rem; margin-bottom: 1.5rem; flex-wrap: wrap;">
+          <a href="/admin/orders" class="btn btn-sm <%= selectedStatus === 'all' ? 'btn-primary' : 'btn-outline' %>" style="background: <%= selectedStatus === 'all' ? '#5B1E31' : 'transparent' %>;">All Orders</a>
+          <a href="/admin/orders?status=Pending" class="btn btn-sm <%= selectedStatus === 'Pending' ? 'btn-primary' : 'btn-outline' %>" style="background: <%= selectedStatus === 'Pending' ? '#5B1E31' : 'transparent' %>;">Pending</a>
+          <a href="/admin/orders?status=Confirmed" class="btn btn-sm <%= selectedStatus === 'Confirmed' ? 'btn-primary' : 'btn-outline' %>" style="background: <%= selectedStatus === 'Confirmed' ? '#5B1E31' : 'transparent' %>;">Confirmed</a>
+          <a href="/admin/orders?status=Packed" class="btn btn-sm <%= selectedStatus === 'Packed' ? 'btn-primary' : 'btn-outline' %>" style="background: <%= selectedStatus === 'Packed' ? '#5B1E31' : 'transparent' %>;">Packed</a>
+          <a href="/admin/orders?status=Shipped" class="btn btn-sm <%= selectedStatus === 'Shipped' ? 'btn-primary' : 'btn-outline' %>" style="background: <%= selectedStatus === 'Shipped' ? '#5B1E31' : 'transparent' %>;">Shipped</a>
+          <a href="/admin/orders?status=Delivered" class="btn btn-sm <%= selectedStatus === 'Delivered' ? 'btn-primary' : 'btn-outline' %>" style="background: <%= selectedStatus === 'Delivered' ? '#5B1E31' : 'transparent' %>;">Delivered</a>
+          <a href="/admin/orders?status=Cancelled" class="btn btn-sm <%= selectedStatus === 'Cancelled' ? 'btn-primary' : 'btn-outline' %>" style="background: <%= selectedStatus === 'Cancelled' ? '#5B1E31' : 'transparent' %>;">Cancelled</a>
+        </div>
+
+        <!-- Orders Master Table -->
+        <div class="admin-table-wrapper">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>Order Number</th>
+                <th>Client & Contact</th>
+                <th>Manifest Details</th>
+                <th>Total</th>
+                <th>Status</th>
+                <th>Change Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% if (orders && orders.length > 0) { %>
+                <% orders.forEach(function(ord) { %>
+                  <tr>
+                    <td>
+                      <strong>#<%= ord.orderNumber %></strong>
+                      <div style="font-size: 0.75rem; color: #6C757D;"><%= new Date(ord.createdAt).toLocaleString() %></div>
+                    </td>
+                    <td>
+                      <strong><%= ord.shippingAddress.fullName %></strong>
+                      <div style="font-size: 0.78rem; color: #6C757D;"><%= ord.shippingAddress.email %></div>
+                      <div style="font-size: 0.75rem; color: #6C757D;"><%= ord.shippingAddress.city %>, <%= ord.shippingAddress.state %></div>
+                    </td>
+                    <td>
+                      <div style="font-size: 0.82rem;">
+                        <%= ord.items.length %> items:
+                        <ul style="margin: 0.25rem 0 0 1rem; padding: 0;">
+                          <% ord.items.forEach(function(i) { %>
+                            <li><%= i.quantity %> &times; <%= i.name %> <% if (i.selectedShade) { %>(<%= i.selectedShade %>)<% } %></li>
+                          <% }); %>
+                        </ul>
+                      </div>
+                    </td>
+                    <td>
+                      <strong style="color: #5B1E31; font-size: 1.05rem;">$<%= ord.totalPrice.toFixed(2) %></strong>
+                      <div style="font-size: 0.72rem; color: #6C757D;"><%= ord.paymentMethod === 'COD' ? 'COD' : 'Demo Online' %> (<%= ord.paymentStatus %>)</div>
+                    </td>
+                    <td>
+                      <span class="status-tag status-<%= ord.orderStatus.toLowerCase() %>">
+                        <%= ord.orderStatus %>
+                      </span>
+                    </td>
+                    <td>
+                      <form action="/admin/orders/status/<%= ord._id %>" method="POST" style="display: flex; gap: 0.35rem; align-items: center;">
+                        <select name="status" class="admin-select" style="padding: 0.35rem 0.5rem; font-size: 0.8rem; width: auto;">
+                          <option value="Pending" <%= ord.orderStatus === 'Pending' ? 'selected' : '' %>>Pending</option>
+                          <option value="Confirmed" <%= ord.orderStatus === 'Confirmed' ? 'selected' : '' %>>Confirmed</option>
+                          <option value="Packed" <%= ord.orderStatus === 'Packed' ? 'selected' : '' %>>Packed</option>
+                          <option value="Shipped" <%= ord.orderStatus === 'Shipped' ? 'selected' : '' %>>Shipped</option>
+                          <option value="Delivered" <%= ord.orderStatus === 'Delivered' ? 'selected' : '' %>>Delivered</option>
+                          <option value="Cancelled" <%= ord.orderStatus === 'Cancelled' ? 'selected' : '' %>>Cancelled</option>
+                        </select>
+                        <button type="submit" class="btn btn-secondary btn-sm" style="padding: 0.35rem 0.65rem; font-size: 0.75rem;">Update</button>
+                      </form>
+                    </td>
+                  </tr>
+                <% }); %>
+              <% } else { %>
+                <tr>
+                  <td colspan="6" style="text-align: center; padding: 3rem; color: #6C757D;">No orders found under this status.</td>
+                </tr>
+              <% } %>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Pagination -->
+        <% if (totalPages > 1) { %>
+          <div style="display: flex; justify-content: center; gap: 0.5rem; margin-top: 2rem;">
+            <% for (let i = 1; i <= totalPages; i++) { %>
+              <a href="/admin/orders?page=<%= i %>&status=<%= selectedStatus %>" 
+                 class="btn btn-sm <%= i === currentPage ? 'btn-primary' : 'btn-outline' %>" style="min-width: 36px; padding: 0.4rem; background: <%= i === currentPage ? '#5B1E31' : 'transparent' %>;">
+                <%= i %>
+              </a>
+            <% } %>
+          </div>
+        <% } %>
+      </div>
+    </div>
+  </main>
+</div>
+
+</body>
+</html>

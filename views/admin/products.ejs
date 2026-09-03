@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= typeof title !== 'undefined' ? title : 'Inventory Catalog | VELORA Admin' %></title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/admin.css">
+</head>
+<body>
+
+<div class="admin-layout">
+  <!-- Sidebar -->
+  <aside class="admin-sidebar">
+    <div class="admin-sidebar-header">
+      <h2>VELORA</h2>
+      <span>Executive Suite</span>
+    </div>
+
+    <ul class="admin-nav">
+      <li><a href="/admin/dashboard">📊 Analytics Dashboard</a></li>
+      <li class="active"><a href="/admin/products">💄 Manage Products</a></li>
+      <li><a href="/admin/products/add">➕ Add New Formulation</a></li>
+      <li><a href="/admin/orders">📦 Customer Orders</a></li>
+      <li><a href="/admin/users">👥 Registered Clients</a></li>
+      <li><a href="/" target="_blank">🌐 Live Store Preview ↗</a></li>
+    </ul>
+
+    <div class="admin-sidebar-footer">
+      <a href="/logout">
+        <span>🚪 Sign Out</span>
+      </a>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="admin-main">
+    <header class="admin-topbar">
+      <div class="admin-topbar-title">
+        <h1>Product Catalog & Inventory</h1>
+      </div>
+      <a href="/admin/products/add" class="btn btn-primary btn-sm" style="background: #5B1E31;">+ Add New Product</a>
+    </header>
+
+    <div class="admin-body">
+      <%- include('../partials/alerts') %>
+
+      <div class="admin-card">
+        <!-- Search & Filter Controls -->
+        <form action="/admin/products" method="GET" style="display: flex; gap: 1rem; margin-bottom: 1.5rem; flex-wrap: wrap;">
+          <input type="text" name="search" class="admin-input" placeholder="Search by name or type..." value="<%= searchQuery %>" style="max-width: 320px;">
+          
+          <select name="category" class="admin-select" style="max-width: 200px;" onchange="this.form.submit()">
+            <option value="all">All Categories</option>
+            <option value="Makeup" <%= selectedCategory === 'Makeup' ? 'selected' : '' %>>Makeup</option>
+            <option value="Skincare" <%= selectedCategory === 'Skincare' ? 'selected' : '' %>>Skincare</option>
+          </select>
+
+          <button type="submit" class="btn btn-secondary btn-sm">Search</button>
+          <% if (searchQuery || (selectedCategory && selectedCategory !== 'all')) { %>
+            <a href="/admin/products" class="btn btn-outline btn-sm">Clear</a>
+          <% } %>
+        </form>
+
+        <!-- Products Table -->
+        <div class="admin-table-wrapper">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>Media</th>
+                <th>Product Name</th>
+                <th>Category</th>
+                <th>Price</th>
+                <th>Stock</th>
+                <th>Badges</th>
+                <th style="text-align: right;">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% if (products && products.length > 0) { %>
+                <% products.forEach(function(p) { %>
+                  <tr>
+                    <td>
+                      <img src="<%= (p.images && p.images.length > 0) ? p.images[0] : '/images/products/placeholder.svg' %>" alt="<%= p.name %>" class="table-img">
+                    </td>
+                    <td>
+                      <strong><%= p.name %></strong>
+                      <div style="font-size: 0.75rem; color: #6C757D;">Slug: <%= p.slug %></div>
+                    </td>
+                    <td>
+                      <%= p.category %> / <%= p.subcategory %>
+                    </td>
+                    <td>
+                      <strong>$<%= p.price.toFixed(2) %></strong>
+                      <% if (p.discountPrice) { %>
+                        <div style="font-size: 0.75rem; color: #2E7D32;">Sale: $<%= p.discountPrice.toFixed(2) %></div>
+                      <% } %>
+                    </td>
+                    <td>
+                      <% if (p.stock <= 5) { %>
+                        <span style="color: #C62828; font-weight: 700;"><%= p.stock %> (Critical)</span>
+                      <% } else if (p.stock <= 15) { %>
+                        <span style="color: #E65100; font-weight: 600;"><%= p.stock %> (Low)</span>
+                      <% } else { %>
+                        <span style="color: #2E7D32;"><%= p.stock %></span>
+                      <% } %>
+                    </td>
+                    <td>
+                      <div style="display: flex; gap: 0.3rem; flex-wrap: wrap;">
+                        <% if (p.bestseller) { %><span class="badge badge-bestseller" style="font-size: 0.6rem;">Best</span><% } %>
+                        <% if (p.featured) { %><span class="badge badge-new" style="font-size: 0.6rem;">Feat</span><% } %>
+                      </div>
+                    </td>
+                    <td style="text-align: right;">
+                      <div style="display: flex; gap: 0.5rem; justify-content: flex-end;">
+                        <a href="/admin/products/edit/<%= p._id %>" class="btn btn-outline btn-sm" style="padding: 0.3rem 0.6rem; font-size: 0.75rem;">Edit</a>
+                        <form action="/admin/products/delete/<%= p._id %>" method="POST" onsubmit="return confirm('Are you sure you want to permanently delete this product?');" style="display: inline;">
+                          <button type="submit" class="btn btn-sm" style="background: #FDF0F0; color: #C62828; padding: 0.3rem 0.6rem; font-size: 0.75rem;">Delete</button>
+                        </form>
+                      </div>
+                    </td>
+                  </tr>
+                <% }); %>
+              <% } else { %>
+                <tr>
+                  <td colspan="7" style="text-align: center; padding: 3rem; color: #6C757D;">No products matched the selected filters.</td>
+                </tr>
+              <% } %>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Pagination -->
+        <% if (totalPages > 1) { %>
+          <div style="display: flex; justify-content: center; gap: 0.5rem; margin-top: 2rem;">
+            <% for (let i = 1; i <= totalPages; i++) { %>
+              <a href="/admin/products?page=<%= i %>&search=<%= searchQuery %>&category=<%= selectedCategory %>" 
+                 class="btn btn-sm <%= i === currentPage ? 'btn-primary' : 'btn-outline' %>" style="min-width: 36px; padding: 0.4rem; background: <%= i === currentPage ? '#5B1E31' : 'transparent' %>;">
+                <%= i %>
+              </a>
+            <% } %>
+          </div>
+        <% } %>
+      </div>
+    </div>
+  </main>
+</div>
+
+</body>
+</html>

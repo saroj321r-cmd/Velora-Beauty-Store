@@ -1,0 +1,25 @@
+<%- include('partials/header') %>
+<%- include('partials/navbar') %>
+
+<div class="container" style="padding: 7rem 1.5rem; text-align: center;">
+  <div style="max-width: 550px; margin: 0 auto; background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 4rem 2rem; box-shadow: var(--shadow-sm);">
+    <span class="section-tag" style="font-size: 1rem;">404 • PAGE NOT FOUND</span>
+    <h1 style="font-size: 3rem; margin: 0.5rem 0 1rem 0;">Lost in Beauty</h1>
+    <p style="color: var(--text-muted); line-height: 1.6; margin-bottom: 2rem;">
+      The formulation or page you are looking for may have been retired, moved, or is temporarily unavailable.
+    </p>
+
+    <% if (typeof error !== 'undefined' && error) { %>
+      <div style="background: #FFF3CD; color: #856404; padding: 1rem; border-radius: var(--radius-sm); margin-bottom: 1.5rem; text-align: left; font-size: 0.8rem; font-family: monospace; overflow-x: auto;">
+        <%= error.message || error %>
+      </div>
+    <% } %>
+
+    <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+      <a href="/" class="btn btn-primary">RETURN HOME</a>
+      <a href="/products" class="btn btn-outline">SHOP ALL PRODUCTS</a>
+    </div>
+  </div>
+</div>
+
+<%- include('partials/footer') %>

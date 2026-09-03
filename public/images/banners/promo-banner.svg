@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 650" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bannerBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FAF5F0" />
+      <stop offset="35%" stop-color="#F4E6DC" />
+      <stop offset="70%" stop-color="#EAD5CB" />
+      <stop offset="100%" stop-color="#D9BFB2" />
+    </linearGradient>
+    <radialGradient id="sunGlow" cx="80%" cy="30%" r="50%">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.8" />
+      <stop offset="100%" stop-color="#EEDFD5" stop-opacity="0" />
+    </radialGradient>
+  </defs>
+
+  <rect width="1600" height="650" fill="url(#bannerBg)" />
+  <circle cx="1200" cy="250" r="450" fill="url(#sunGlow)" />
+
+  <!-- Abstract Aesthetic Shapes -->
+  <path d="M 950 0 C 1100 150, 1300 200, 1600 120 L 1600 650 L 850 650 C 950 500, 900 250, 950 0 Z" fill="#E8D1C4" opacity="0.3" />
+  <circle cx="1350" cy="350" r="180" fill="none" stroke="#DDA8A2" stroke-width="2" opacity="0.5" />
+  <circle cx="1350" cy="350" r="230" fill="none" stroke="#B87770" stroke-width="1" stroke-dasharray="8 8" opacity="0.4" />
+
+  <!-- Botanical / Organic leaf lines -->
+  <path d="M 1250 550 Q 1320 400 1420 320 Q 1380 430 1450 550 Z" fill="#C5857E" opacity="0.15" />
+  <path d="M 1150 580 Q 1200 480 1300 420 Q 1250 520 1310 600 Z" fill="#9C5A55" opacity="0.1" />
+
+  <!-- Editorial Typography -->
+  <text x="120" y="160" font-family="'Plus Jakarta Sans', sans-serif" font-size="14" font-weight="700" letter-spacing="6" fill="#842D48">THE NEW LUXE BEAUTY ARCHIVE</text>
+  <text x="120" y="260" font-family="'Playfair Display', serif" font-size="64" font-weight="700" letter-spacing="2" fill="#1A1615">LUXURY FORMULAS. ETHICAL CRAFT.</text>
+  <text x="120" y="320" font-family="'Plus Jakarta Sans', sans-serif" font-size="20" font-weight="300" letter-spacing="1" fill="#4A3F3D">Vegan, cruelty-free botanicals backed by dermatologist science.</text>
+
+  <rect x="120" y="380" width="180" height="52" rx="26" fill="#1A1615" />
+  <text x="210" y="412" font-family="'Plus Jakarta Sans', sans-serif" font-size="13" font-weight="600" letter-spacing="2.5" fill="#FFFFFF" text-anchor="middle">EXPLORE NOW</text>
+</svg>
